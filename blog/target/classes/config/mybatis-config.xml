@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-config.dtd">
+
+ 						<!-- SampleDTO를 sampleDTO로 쓰겠다 -->
+<configuration>
+	<typeAliases>
+		
+	</typeAliases>
+</configuration>
