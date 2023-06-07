@@ -15,7 +15,22 @@ public class MemberServiceImpl implements MemberService {
 	private MemberMapper mapper;
 	
 	@Override
-	public List<MemberDTO> memberAll() {
-		return mapper.memberAll();		
-	}
+	public int loginCheck(String id, String pw) {
+		return mapper.loginCheck(id, pw);		
+	};
+	
+	@Override
+	public MemberDTO memberAll(String id) {
+		return mapper.memberAll(id);
+	};
+	
+	@Override
+	public void inputPro(MemberDTO dto) {
+		mapper.inputPro(dto);
+	};
+	
+	@Override
+	public void updatePro(MemberDTO dto) {
+		mapper.updatePro(dto);
+	};
 }

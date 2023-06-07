@@ -6,5 +6,11 @@ import test.spring.component.MemberDTO;
 
 public interface MemberService {
 
-	public List<MemberDTO> memberAll();
+	public int loginCheck(String id, String pw);
+	
+	public MemberDTO memberAll(String id);
+	
+	public void inputPro(MemberDTO dto);
+	
+	public void updatePro(MemberDTO dto);
 }
