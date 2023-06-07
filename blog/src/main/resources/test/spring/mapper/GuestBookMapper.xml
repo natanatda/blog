@@ -5,8 +5,12 @@
 
 <mapper namespace="test.spring.mapper.GuestBookMapper">
 
-	<select id="sampleList" resultType="test.spring.component.SampleDTO"> 
-		select * from sample                    
+	<insert id="insert">
+		insert into guestbook values(guest_seq.NEXTVAL,#{id},#{subject},sysdate)
+	</insert>
+	
+	<select id="guestList" resultType="test.spring.component.GuestBookDTO"> 
+		select * from guestbook order by reg_date desc            
 	</select>
 	
 </mapper>
