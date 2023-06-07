@@ -3,7 +3,61 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-Mapper.dtd">
 <mapper namespace="test.spring.mapper.ImgBoard1Mapper">
+	<!-- 
 	<select id="getArticles" resultType="test.spring.component.SampleDTO">
 		select * from sample
 	</select>
+	 -->
+	 
+	<sql id="col">
+		img_board1_num,id,subject,content,readcount,ip,reg_date
+	</sql>
+	<sql id="getDTO">
+		#{id},#{subject},#{content},#{readcount},#{ip},#{reg_date}
+	</sql>
+	<sql id="defaultSort">
+		order by img_board1_num
+	</sql>
+	
+	<select id="getCount" resultType="int">
+		select count(*) from img_board1
+	</select>
+	
+	<select id="getLastNum" resultType="int">
+		select max(img_board1_num) from img_board1
+	</select>
+	
+	<select id = "getArticle" resultType="test.spring.component.ImgBoard1DTO">
+		select * from img_board1 where img_board1_num = #{img_board1_num}
+	</select>
+	
+	<select id="getArticles" resultType="test.spring.component.ImgBoard1DTO">
+		select <include refid="col"/> ,r  
+		from (select <include refid="col"/>,rownum r 
+		from (select <include refid="col"/>
+		from img_board1 <include refid="defaultSort"/>) <include refid="defaultSort"/>) 
+		<![CDATA[where r>= ${startRow} and r<=${endRow}]]>
+	</select>
+	
+	<update id="addReadcount">
+		update img_board1 set readcount=readcount+1 where img_board1_num=#{img_board1_num}
+	</update>
+	
+		<update id="update">
+		update img_board1
+		<set>
+			id=#{id}, subject=#{subject}, content=#{content} 
+			<where>
+				img_board1_num=#{img_board1_num}
+			</where>
+		</set>
+	</update>
+	
+	<insert id="insert">
+		insert into img_board1(<include refid="col"/>) values (img_board1_seq.NEXTVAL,<include refid="getDTO"/>)
+	</insert>
+	
+	<delete id="delete">
+		delete img_board1 where img_board1_num=#{img_board1_num}
+	</delete>
 </mapper>
