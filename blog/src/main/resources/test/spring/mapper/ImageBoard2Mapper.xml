@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-Mapper.dtd">
+<mapper namespace="test.spring.mapper.ImageBoard2Mapper">
+
+<select id="getList" resultType="test.spring.component.Img_Board2DTO">
+	 select * from 
+	   (select  img_board2_num , id , subject, reg_date, img, content, ip, readcount, ROW_NUMBER() OVER (ORDER BY reg_date desc) r from img_board2) 
+	   where r between #{start} and #{end}
+</select>
+
+<select id="countList" resultType="int">
+	select count(*) from img_board2
+</select>
+
+
+
+</mapper>
