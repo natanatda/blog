@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-Mapper.dtd">
+
+<mapper namespace="test.spring.mapper.GuestBookMapper">
+
+	<insert id="insert">
+		insert into guestbook values(guest_seq.NEXTVAL,#{id},#{subject},sysdate)
+	</insert>
+	
+	<select id="guestList" resultType="test.spring.component.GuestBookDTO"> 
+		select * from guestbook order by reg_date desc            
+	</select>
+	
+</mapper>
