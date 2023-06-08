@@ -1,6 +1,8 @@
 package test.spring.controller;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +21,20 @@ public class MemberController {
 	private MemberService service;
 	
 	@RequestMapping("blogHome")
-	public String blogHome() {
+	public String blogHome(HttpServletRequest request, HttpServletResponse response, Model model) {
+		HttpSession session = request.getSession();
+		String id = (String)session.getAttribute("memId");
+		Cookie [] cookies = request.getCookies();
+		if(cookies != null) {
+			for(Cookie cookie : cookies) {
+				if(cookie.getName().equals("remember-me")) {
+					String cooId = cookie.getValue();
+					model.addAttribute("cookies", cooId);
+					model.addAttribute("id", id);
+					break;
+				}
+			}
+		}
 		return "/sample/blogHome";
 	}
 	
@@ -40,11 +55,28 @@ public class MemberController {
 	}
 	
 	@RequestMapping("loginPro")
-	public String loginPro(String id, String pw, HttpServletRequest request) {
+	public String loginPro(String id, String pw, String re, HttpServletRequest request, HttpServletResponse response) {
 		HttpSession session = request.getSession();
 		String url ="";
+		Cookie [] cookies = request.getCookies();
+		for(Cookie c : cookies) {
+			if(c.getName().equals("cooId")) {id = c.getValue();}
+			if(c.getName().equals("cooPw")) {pw = c.getValue();}
+			if(c.getName().equals("cooRe")) {re = c.getValue();}
+		}
 		if(service.loginCheck(id, pw) == 1) {
 			session.setAttribute("memId", id);
+			if(re != null) {
+				Cookie coo1 = new Cookie("cooId", id);
+				Cookie coo2 = new Cookie("cooPw", pw);
+				Cookie coo3 = new Cookie("cooRe", re);
+				coo1.setMaxAge(60*60*24);
+				coo2.setMaxAge(60*60*24);
+				coo3.setMaxAge(60*60*24);
+				response.addCookie(coo1);
+				response.addCookie(coo2);
+				response.addCookie(coo3);
+			}
 			url = "/sample/blogHome";
 			System.out.println("성공");
 		}else {
@@ -75,9 +107,24 @@ public class MemberController {
 	}
 	
 	@RequestMapping("logout")
-	public String logout(HttpServletRequest request) {
+	public String logout(HttpServletRequest request,HttpServletResponse response) {
 		HttpSession session = request.getSession();
 		session.invalidate();
-		return "/member/login";
+		Cookie [] cookies = request.getCookies();
+		for(Cookie c : cookies) {
+			if(c.getName().equals("cooId")) {
+				c.setMaxAge(0);
+				response.addCookie(c);
+			}
+			if(c.getName().equals("cooPw")) {
+				c.setMaxAge(0);
+				response.addCookie(c);
+			}
+			if(c.getName().equals("cooRe")) {
+				c.setMaxAge(0);
+				response.addCookie(c);
+			}
+		}
+		return "/sample/blogHome";
 	}
 }

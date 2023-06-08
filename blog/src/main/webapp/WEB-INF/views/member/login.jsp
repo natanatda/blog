@@ -68,7 +68,7 @@
          
          <div class="checkbox mb-3">
             <label>
-               <input type="checkbox" name="remember-me" value="remember-me"> 아이디 저장
+               <input type="checkbox" name="re" value="remember-me"> 아이디 저장
             </label>
          </div>
          <button class="w-100 btn btn-lg btn-primary" type="submit">로그인</button>

@@ -86,9 +86,7 @@
             <div class="invalid-feedback">
               이메일을 입력해주세요.
             </div>
-          </div>
-
-         
+          </div>         
           <div class="mb-4"></div>
           <button class="btn btn-primary btn-lg btn-block w-100" type="submit">수정</button>
         </form>
