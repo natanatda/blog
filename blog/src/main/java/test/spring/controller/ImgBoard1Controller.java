@@ -1,5 +1,6 @@
 package test.spring.controller;
 
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -37,25 +38,27 @@ public class ImgBoard1Controller {
 		int startRow = (currentPage-1)*pageSize +1;
 		int endRow = currentPage * pageSize;
 		int count = 0;
-		int number = 0;
+		//int number = 0;
 		
-		List<ImgBoard1DTO> dtoList = null;
+		List<ImgBoard1DTO> dbdtoList = null;
+		List<List<ImgBoard1DTO>> dtoList = null;
 		count = service.getCount();
 		//count = 100000;
 		model.addAttribute("count",count);
 		if(count>0){
-			dtoList = service.getArticles(startRow, endRow);
-			model.addAttribute("firstList", dtoList.get(0)); //6
-			for(int i = 1; i<pageSize; i+=2) { // 1 3 5
+			dbdtoList = service.getArticles(startRow, endRow);
+			model.addAttribute("firstList", dbdtoList.get(0)); //6
+			dtoList = new ArrayList<List<ImgBoard1DTO>>();
+			for(int i = 1; i<dbdtoList.size(); i+=2) { // 1 3 5 123-4 1234-5 12345-6 123456-7
 				ArrayList<ImgBoard1DTO> dtoListSemi = new ArrayList<ImgBoard1DTO>();
-				dtoListSemi.add(dtoList.get(i));
-				if(dtoList.get(i+1)!=null) {
-					dtoListSemi.add(dtoList.get(i+1));
+				dtoListSemi.add(dbdtoList.get(i));
+				if(i+1!=dbdtoList.size()) { // 5 > 6 호출 에러
+					dtoListSemi.add(dbdtoList.get(i+1));
 				}
-				System.out.println(dtoListSemi);
-				System.out.println("List"+((i-1)/2+1));
-				model.addAttribute("List"+((i-1)/2+1), dtoListSemi); //6
+				dtoList.add(dtoListSemi);
 			}
+			//System.out.println(dtoList);
+			model.addAttribute("dtoList", dtoList); //6
 			int pageCount = count / pageSize + (count % pageSize==0 ? 0 :1);
 			int startPage = (int)(currentPage/10)*10+1;
 			int pageBlock = 10;
@@ -66,8 +69,37 @@ public class ImgBoard1Controller {
 			model.addAttribute("pageBlock", pageBlock);
 			model.addAttribute("pageCount", pageCount);
 		}
-		number = count - (currentPage-1)*pageSize;
-		model.addAttribute("number", number); // number
+		//number = count - (currentPage-1)*pageSize;
+		//model.addAttribute("number", number); // number
 		return "/imgBoard1/list";
 	}
+	
+	@RequestMapping("content")
+	public String content(HttpServletRequest request, Model model) {
+		String board_num = (String)request.getParameter("num");
+		if(board_num!=null) {
+		}else {
+			board_num = "1";
+		}
+		int img_board1_num = Integer.parseInt(board_num);
+		ImgBoard1DTO dto = service.getArticle(img_board1_num);
+		System.out.println(dto.getContent()+" "+img_board1_num);
+		model.addAttribute("article", dto);
+		return "/imgBoard1/content";
+	}
+	@RequestMapping("write")
+	public String write( Model model) {
+		return "/imgBoard1/write";
+	}
+	@RequestMapping("insert")
+	public String insert(HttpServletRequest request, ImgBoard1DTO article, Model model) {
+		article.setId("ee");
+		article.setReg_date(new Timestamp(System.currentTimeMillis()));
+		article.setIp(request.getRemoteAddr());
+		article.setReadcount(0);
+		System.out.println(article);
+		service.insert(article);
+		return "redirect:/imgBoard1/list";
+	}
+	
 }

@@ -8,6 +8,21 @@
 <title>Insert title here</title>
 <!-- CSS only -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+<style type="text/css">
+	.target {
+    /* 여러 줄 자르기 추가 스타일 */
+	    white-space: normal;
+	    line-height: 1.2;
+	    height: 20px;
+	    text-align: left;
+	    word-wrap: break-word;
+	    display: -webkit-box;
+	    -webkit-line-clamp: 3;
+	    -webkit-box-orient: vertical;
+	 	text-overflow: ellipsis;
+	 	overflow: hidden;
+	}
+</style>
 <!-- JavaScript Bundle with Popper -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
 </head>
@@ -52,46 +67,46 @@
                         <div class="card-body">
                             <div class="small text-muted">${firstList.reg_date }</div>
                             <h2 class="card-title">${firstList.subject }</h2>
-                            <p class="card-text">${firstList.content }</p>
-                            <a class="btn btn-primary" href="#!">Read more →</a>
+                            <p class="card-text"><div class="target">${firstList.content }</div></p>
+                            <a class="btn btn-primary" href="content?num=${firstList.img_board1_num}">Read more →</a>
                         </div>
                     </div>
-                    <c:forEach var="dtoList" items="${List2}" varStatus="loop">
-                    	<h1>${dtoList.subject}</h1>
-                    </c:forEach>
-                    <%-- 
-                    <!-- Nested row for non-featured blog posts-->
-                   <div class="row">
-                   		<c:forEach var="dtoList" items="${ }">
-                        <div class="col-lg-6">
-                            <!-- Blog post-->
-                            <c:forEach var="dtoList">
-							<div class="card mb-4">
-		                        <a href="#!"><img class="card-img-top" src="https://dummyimage.com/850x350/dee2e6/6c757d.jpg" alt="..." /></a>
-		                        <div class="card-body">
-		                            <div class="small text-muted">${dto.reg_date }${loop.index }</div>
-		                            <h2 class="card-title">${dto.subject }</h2>
-		                            <p class="card-text">${dto.content }</p>
-		                            <a class="btn btn-primary" href="#!">Read more →</a>
-		                        </div>
-		                    </div>
-                            </c:forEach>
-                        </div>
-                   		</c:forEach>
-                    </div>
-                     --%>
                     
-                    <!-- Pagination-->
+                    <c:forEach var="dtoSemiList" items="${dtoList}">
+						<div class="row">
+							<!-- Blog post-->
+		                   	<c:forEach var="dto" items="${dtoSemiList}">
+								<div class="col-lg-6">
+									<div class="card mb-4">
+				                        <a href="#!"><img class="card-img-top" src="https://dummyimage.com/850x350/dee2e6/6c757d.jpg" alt="..." /></a>
+				                        <div class="card-body">
+				                            <div class="small text-muted">${dto.reg_date }</div>
+				                            <h2 class="card-title">${dto.subject }</h2>
+				                            <p class="card-text">${dto.content }</p>
+				                            <a class="btn btn-primary" href="content?num=${dto.img_board1_num}">Read more →</a>
+				                        </div>
+				                    </div>
+		                        </div>
+							</c:forEach>
+	                    </div>
+                   	</c:forEach>
                     <nav aria-label="Pagination">
                         <hr class="my-0" />
                         <ul class="pagination justify-content-center my-4">
-                            <li class="page-item disabled"><a class="page-link" href="#" tabindex="-1" aria-disabled="true">Newer</a></li>
-                            <li class="page-item active" aria-current="page"><a class="page-link" href="#!">1</a></li>
-                            <li class="page-item"><a class="page-link" href="#!">2</a></li>
-                            <li class="page-item"><a class="page-link" href="#!">3</a></li>
-                            <li class="page-item disabled"><a class="page-link" href="#!">...</a></li>
-                            <li class="page-item"><a class="page-link" href="#!">15</a></li>
-                            <li class="page-item"><a class="page-link" href="#!">Older</a></li>
+	                        <c:if test="${endPage > pageBlock}">
+	                            <li class="page-item disabled"><a class="page-link" href="list?pageNum=${startPage-pageBlock}" tabindex="-1" aria-disabled="true">Newer</a></li>
+							</c:if>
+                            <c:forEach var="num" begin="${startPage}" end="${endPage}">
+	                            <c:if test="${num==currentPage}">
+	                            	<li class="page-item active" aria-current="page"><a class="page-link" href="list?pageNum=${num}">${num }</a></li>
+								</c:if>
+	                            <c:if test="${num!=currentPage}">
+	                            	<li class="page-item" aria-current="page"><a class="page-link" href="list?pageNum=${num}">${num }</a></li>
+								</c:if>
+							</c:forEach>
+                            <c:if test="${endPage < pageCount}">
+	                            <li class="page-item"><a class="page-link" href="list?pageNum=${startPage+pageBlock}">Older</a></li>
+							</c:if>
                         </ul>
                     </nav>
                 </div>
