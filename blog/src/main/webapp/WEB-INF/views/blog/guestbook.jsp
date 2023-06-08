@@ -34,7 +34,7 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                         <li class="nav-item"><a class="nav-link active" aria-current="page" href="/blog/member/main">Home</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#!">board</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/blog/board/list">board</a></li>
                         <li class="nav-item"><a class="nav-link" href="#!">imgBoard</a></li>
                         <li class="nav-item"><a class="nav-link" href="#!">imgBoard2</a></li>
                         <li class="nav-item"><a class="nav-link" href="/blog/guest/guestbook">guestBook</a></li>
@@ -70,7 +70,7 @@
                                 	<c:if test="${sessionScope.memId != null}">
 	                                	<textarea class="form-control" rows="3" name="subject" placeholder="방명록을 작성해보세요~"></textarea>
 	                                	<div class="justify-content-end d-flex">
-		                                	<button type="submit" class="btn btn-primary btn-sm">등  록</button>
+		                                	<button type="submit" class="btn btn-primary btn-sm mt-2">등  록</button>
 	                                	</div>
                                 	</c:if>
                                 	<c:if test="${sessionScope.memId == null}">
@@ -84,11 +84,11 @@
 	                                    <div class="ms-3 w-100">
 	                                    	<fmt:formatDate value="${dto.reg_date}" pattern="yyyy-MM-dd HH:mm:ss" var="formattedDate" />
 	                                        <div class="fw-bold">${dto.id}&nbsp;&nbsp;${formattedDate}</div>
-	                                       
+	                                        ${dto.subject}
 	                                        <c:if test="${sessionScope.memId != null}">
 	                                        	<c:if test="${sessionScope.memId.equals(dto.id)}">
 	                                        		<c:if test="${a == null}">
-		                                        		 ${dto.subject}
+		                                        		 
 				                                        <div class="justify-content-end d-flex">
 						                                	<button type="button" class="btn btn-light btn-xs" onclick="location='guestbook?a=1&num=${dto.num}'">수정</button>
 						                                	<button type="button" class="btn btn-light btn-xs" onclick="location='delete?num=${dto.num }'">삭제</button>
@@ -127,7 +127,7 @@
 			                                  <li class="page-item active" aria-current="page"><a class="page-link" href="guestbook?pageNum=${num}">${num }</a></li>
 			                         	   </c:if>
 			                               <c:if test="${num!=currentPage}">
-			                                  <li class="page-item " aria-current="page"><a class="page-link" href="guestbook?pageNum=${num}">${num }</a></li>
+			                                  <li class="page-item"><a class="page-link" href="guestbook?pageNum=${num}">${num }</a></li>
 			                        	   </c:if>
 			                     	   </c:forEach>
 			                           <c:if test="${endPage < pageCount}">
