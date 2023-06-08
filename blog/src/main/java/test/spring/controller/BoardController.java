@@ -18,16 +18,49 @@ public class BoardController {
 	private BoardService service;
 	
 	@RequestMapping("list")
-	public String listAll(Model model, String id) {
-		List<BoardDTO> list = service.listAll(id);
+	public String listAll(Model model, BoardDTO dto) {
+		System.out.println(dto);
+		List<BoardDTO> list = service.infoAll(dto);
 		model.addAttribute("list", list);
 		return "/board/list";
 	}
+	
+	@RequestMapping("content")
+	public String content(Model model, BoardDTO dto) {
+		List<BoardDTO> list = service.infoAll(dto);
+		model.addAttribute("list", list);
+		return "/board/content";
+	}
+	
 	
 	@RequestMapping("writeForm")
 	public String writeForm() {
 		return "/board/writeForm";
 	}
 	
+	@RequestMapping("writePro")
+	public String writePro(BoardDTO dto) {
+		service.contentWrite(dto);
+		return "/board/list";
+	}
+	
+	@RequestMapping("modifyForm")
+	public String modifyForm(Model model, BoardDTO dto) {
+		List<BoardDTO> list = service.infoAll(dto);
+		model.addAttribute("list", list);
+		return "/board/modifyForm";
+	}
+	
+	@RequestMapping("modifyPro")
+	public String modifyPro(BoardDTO dto) {
+		service.contentModify(dto);
+		return "redirect:/board/content?board_num="+dto.getBoard_num();
+	}
+	
+	@RequestMapping("deletePro")
+	public String deletePro(int board_num) {
+		service.contentDel(board_num);
+		return "/board/list";
+	}
 
 }

@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
+<c:forEach var="list" items="${list}">
 <!DOCTYPE html>
 <html>
 <head>
@@ -38,14 +39,15 @@
         <div class="container mt-5">
             <div class="row">
                 <div class="col-lg-8">
-                <form method="post" action="writePro"  onsubmit="return submitContents()">
+                <form method="post" action="modifyPro"  onsubmit="return submitContents()">
                 	<input type="hidden" name="id" value="${list.id}">
+                	<input type="hidden" name="board_num" value="${list.board_num}">
 					<%-- 제목 --%>
-					<input type="text" placeholder="제목을 작성하세요" name="subject" style="width: 100%;">
+					<input type="text" value="${list.subject}" placeholder="제목을 작성하세요" name="subject" style="width: 100%;">
 					
 					<div id="smartEditor">
 					<%-- 네이버 에디터 --%>
-	                <textarea id="txtContent" name="content" rows="10" cols="100" style="width: 100%;"></textarea>
+	                <textarea id="txtContent" name="content" rows="10" cols="100" style="width: 100%;">${list.content}</textarea>
 	                </div>
 	                
 					<!-- textarea 밑에 script 작성하기 -->
@@ -77,6 +79,7 @@
 	                <input type="submit" id="save" value="저장"/>
 	                <input type="button" value="취소"/>
 				</form>
+				</c:forEach>
                     
                 </div>
                 <!-- Side widgets-->

@@ -15,8 +15,24 @@ public class BoardServiceImpl implements BoardService {
 	private BoardMapper mapper;
 
 	@Override
-	public List<BoardDTO> listAll(String id) {
-		return mapper.listAll(id);
+	public List<BoardDTO> infoAll(BoardDTO dto) {
+		return mapper.infoAll(dto);
+	}
+
+	@Override
+	public void contentDel(int board_num) {
+		mapper.contentDel(board_num);
+	}
+
+	
+	@Override
+	public void contentWrite(BoardDTO dto) {
+		mapper.contentWrite(dto);
+	}
+
+	@Override
+	public void contentModify(BoardDTO dto) {
+		mapper.contentModify(dto);
 	}
 	
 }

@@ -43,15 +43,15 @@
                 <!-- Blog entries-->
                 <div class="col-lg-8">
                     <!-- Featured blog post-->
-                    <c:forEach var="list" items="${list}">
-                    <div class="card mb-4">
-                        <div class="card-body">
-                            <div class="small text-muted">January 1, 2023</div>
-                            <h2 class="card-title">Featured Post Title</h2>
-                            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis aliquid atque, nulla? Quos cum ex quis soluta, a laboriosam. Dicta expedita corporis animi vero voluptate voluptatibus possimus, veniam magni quis!</p>
-                            <a class="btn btn-primary" href="#!">Read more →</a>
-                        </div>
-                    </div>
+                    <c:forEach var="dto" items="${list}">
+	                    <div class="card mb-4">
+	                        <div class="card-body">
+	                            <div class="small text-muted">${dto.reg}</div>
+	                            <h2 class="card-title">${dto.subject}</h2>
+	                            <p class="card-text">${dto.content}</p>
+	                            <a class="btn btn-primary" href="/blog/board/content?board_num=${dto.board_num }">Read more →</a>
+	                        </div>
+	                    </div>
                     </c:forEach>
 
                     <!-- Pagination-->

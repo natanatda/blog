@@ -2,20 +2,39 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
+<c:forEach var="list" items="${list}">
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
+	<meta charset="UTF-8">
+	<title>Insert title here</title>
 	<!-- CSS only -->
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
 	<!-- JavaScript Bundle with Popper -->
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
-	
-	<!-- 네이버 스마트에디터  -->
-	<script type="text/javascript" src="/blog/resources/static/libs/smarteditor/js/service/HuskyEZCreator.js" charset="utf-8"></script>
-	<script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.min.js"></script>
-	
+	<script src="//code.jquery.com/jquery-3.7.0.min.js"></script>
+	<script>
+		$(document).ready(function() {
+			var isTime;
+			$("#delBt").click(function() {
+				if (confirm("수정 하시겠습니까?")) {
+					var boardNum = parseInt("${list.board_num}");
+					$.ajax({
+						url : "/blog/board/deletePro",
+						data : {
+							board_num : boardNum
+						},
+						success : function(result) {
+							alert('삭제 되었습니다');
+						},
+						error : function() {
+							alert('다시 시도해주세요');
+						}
+					});
+				}
+			});
+		});
+	</script>
 	
 </head>
 <body>
@@ -38,46 +57,26 @@
         <div class="container mt-5">
             <div class="row">
                 <div class="col-lg-8">
-                <form method="post" action="writePro"  onsubmit="return submitContents()">
-                	<input type="hidden" name="id" value="${list.id}">
-					<%-- 제목 --%>
-					<input type="text" placeholder="제목을 작성하세요" name="subject" style="width: 100%;">
-					
-					<div id="smartEditor">
-					<%-- 네이버 에디터 --%>
-	                <textarea id="txtContent" name="content" rows="10" cols="100" style="width: 100%;"></textarea>
-	                </div>
-	                
-					<!-- textarea 밑에 script 작성하기 -->
-					<script id="smartEditor" type="text/javascript"> 
-						var oEditors = [];
-						nhn.husky.EZCreator.createInIFrame({
-						    oAppRef: oEditors,
-						    elPlaceHolder: "txtContent",  //textarea ID 입력
-						    sSkinURI: "/blog/resources/static/libs/smarteditor/SmartEditor2Skin.html",  //martEditor2Skin.html 경로 입력
-						    fCreator: "createSEditor2",
-						    htParams : { 
-						    	// 툴바 사용 여부 (true:사용/ false:사용하지 않음) 
-						        bUseToolbar : true, 
-								// 입력창 크기 조절바 사용 여부 (true:사용/ false:사용하지 않음) 
-								bUseVerticalResizer : false, 
-								// 모드 탭(Editor | HTML | TEXT) 사용 여부 (true:사용/ false:사용하지 않음) 
-								bUseModeChanger : false 
-						    }
-						});
-						function submitContents(elClickedObj) {
-							 // 에디터의 내용이 textarea에 적용된다.
-							 oEditors.getById["txtContent"].exec("UPDATE_CONTENTS_FIELD", []);
+                    <!-- Post content-->
+	                    <article>
+	                        <!-- Post header-->
+	                        <header class="mb-4">
+	                            <!-- Post title-->
+	                            <h1 class="fw-bolder mb-1">${list.subject}</h1>
+	                            <!-- Post meta content-->
+	                            <div class="text-muted fst-italic mb-2">Posted on ${list.reg} by ${list.id}</div>
+	                        </header>
+	                        <!-- Post content-->
+	                        <section class="mb-5">
+	                            <p class="fs-5 mb-4">${list.content}</p>
+	                        </section>
+	                    </article>
+	                    <input type="button" value="수정" onclick="location='/blog/board/modifyForm?board_num=${list.board_num}&id=${list.id }'">
+	                    <input type="button" id="delBt" value="삭제">
+                    	<c:if test="${sessionScope.Id == list.id}">
+                    	</c:if>
+                    </c:forEach>
 
-							 try {
-							     elClickedObj.form.submit();
-							 } catch(e) {}
-						}
-					</script>
-	                <input type="submit" id="save" value="저장"/>
-	                <input type="button" value="취소"/>
-				</form>
-                    
                 </div>
                 <!-- Side widgets-->
                 <div class="col-lg-4">
