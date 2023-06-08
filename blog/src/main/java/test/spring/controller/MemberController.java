@@ -130,7 +130,6 @@ public class MemberController {
 	
 	@RequestMapping("testBoard")
 	public String testBoard(HttpServletRequest request, MemberDTO dto) {
-
 		return "/board/testBoard";
 	}
 	
