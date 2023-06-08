@@ -30,10 +30,21 @@
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                        <li class="nav-item"><a class="nav-link" href="#">Home</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#!">About</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#!">Contact</a></li>
-                        <li class="nav-item"><a class="nav-link active" aria-current="page" href="#">Blog</a></li>
+                        <li class="nav-item"><a class="nav-link active" aria-current="page" href="/blog/member/main">Home</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#!">board</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#!">imgBoard</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#!">imgBoard2</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/blog/guest/guestbook">guestBook</a></li>
+                    </ul>
+                    <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                    	<c:if test="${sessionScope.memId != null}">
+	                        <li class="nav-item"><a class="nav-link" href="/blog/member/updateForm">myPage</a></li>
+	                        <li class="nav-item"><a class="nav-link" href="/blog/member/logout">logout</a></li>
+                    	</c:if>
+                    	<c:if test="${sessionScope.memId == null}">
+	                        <li class="nav-item"><a class="nav-link" href="/blog/member/inputForm">join</a></li>
+	                        <li class="nav-item"><a class="nav-link" href="/blog/member/login">login</a></li>
+                        </c:if>
                     </ul>
                 </div>
             </div>
@@ -53,7 +64,6 @@
                             <div class="card-body">
                                 <!-- Comment form-->
                                 <form class="mb-4" method="post" action="insert" name="guestForm" onSubmit="return checkIt()">
-                                	<input type="text" name="id"/> 
                                 	<textarea class="form-control" rows="3" name="subject" placeholder="방명록을 작성해보세요~"></textarea>
                                 	<div class="justify-content-end d-flex">
 	                                	<button type="submit" class="btn btn-primary btn-sm">등  록</button>
@@ -67,10 +77,14 @@
 	                                    	<fmt:formatDate value="${dto.reg_date}" pattern="yyyy-MM-dd HH:mm:ss" var="formattedDate" />
 	                                        <div class="fw-bold">${dto.id}&nbsp;&nbsp;${formattedDate}</div>
 	                                        ${dto.subject}
-	                                        <div class="justify-content-end d-flex">
-			                                	<button type="button" class="btn btn-light btn-xs">수정</button>
-			                                	<button type="button" class="btn btn-light btn-xs">삭제</button>
-		                                	</div>
+	                                        <c:if test="${sessionScope.memId != null}">
+	                                        	<c:if test="${sessionScope.memId.equals(dto.id)}">
+			                                        <div class="justify-content-end d-flex">
+					                                	<button type="button" class="btn btn-light btn-xs" onclick="location='update'">수정</button>
+					                                	<button type="button" class="btn btn-light btn-xs" onclick="location='delete'">삭제</button>
+				                                	</div>
+			                                	</c:if>
+		                                	</c:if>
 	                                        <hr>
 	                                    </div>
 	                                </div>

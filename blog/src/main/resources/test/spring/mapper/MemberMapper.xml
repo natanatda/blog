@@ -8,6 +8,7 @@
   <select id="memberAll" resultType="memberDTO">
   	select * from member where id = #{id}
   </select>
+  
   <select id="loginCheck" resultType="int">
   	select count(*) from member
   	<where>
