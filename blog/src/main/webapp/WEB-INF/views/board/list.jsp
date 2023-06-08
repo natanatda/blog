@@ -39,7 +39,7 @@
         </header>
         <!-- Page content-->
         <div class="container">
-        <c:if test="${sessionScope.memId != null }">
+        <c:if test="${sessionScope.memId =='whou' }">
         	<input type="button" value="글쓰기" onclick="location='writeForm'">
        	</c:if>
             <div class="row">

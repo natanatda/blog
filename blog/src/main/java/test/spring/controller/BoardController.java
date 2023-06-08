@@ -20,7 +20,7 @@ public class BoardController {
 	private BoardService service;
 	
 	@RequestMapping("list")
-	public String sessionListAll(Model model, BoardDTO dto, @RequestParam(defaultValue = "1") int pageNumber) {
+	public String listAll(Model model, BoardDTO dto, @RequestParam(defaultValue = "1") int pageNumber) {
 		int pageSize = 5; // 페이지당 데이터 개수
 	    int startIndex = (pageNumber - 1) * pageSize; // 시작 인덱스
 	    
@@ -53,7 +53,7 @@ public class BoardController {
 	}
 	
 	@RequestMapping("content")
-	public String sessionContent(Model model, BoardDTO dto) {
+	public String content(Model model, BoardDTO dto) {
 		List<BoardDTO> list = service.infoAll(dto);
 		model.addAttribute("list", list);
 		return "/board/content";
