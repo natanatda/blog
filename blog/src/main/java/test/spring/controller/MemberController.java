@@ -1,5 +1,7 @@
 package test.spring.controller;
 
+import java.util.List;
+
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -10,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import test.spring.component.GuestBookDTO;
 import test.spring.component.MemberDTO;
 import test.spring.service.MemberService;
 
@@ -129,8 +132,53 @@ public class MemberController {
 	}
 	
 	@RequestMapping("testBoard")
-	public String testBoard(HttpServletRequest request, MemberDTO dto) {
+	public String testBoard(HttpServletRequest request, GuestBookDTO dto, Model model) {
+		HttpSession session = request.getSession();
+		String id = (String)session.getAttribute("memId");
+		model.addAttribute("id",id);
+		
+
+		int pageSize = 10;
+		String pageNum = request.getParameter("pageNum");
+	    if (pageNum == null) {
+	        pageNum = "1";
+	    }
+
+	    int currentPage = Integer.parseInt(pageNum);
+	    int start = (currentPage - 1) * pageSize + 1;
+	    int end = currentPage * pageSize;
+
+		List<GuestBookDTO> list = service.testList(start,end);
+		
+		int count = service.count();
+		
+		model.addAttribute("count",count);
+		model.addAttribute("list", list);
+		
+		int pageCount = count / pageSize + (count % pageSize==0 ? 0 :1);
+		int startPage = (int)(currentPage/10)*10+1;
+        int pageBlock = 10;
+        int endPage = startPage + pageBlock -1;
+        if (endPage > pageCount) endPage = pageCount;
+        
+        model.addAttribute("startPage", startPage);
+        model.addAttribute("endPage", endPage);
+        model.addAttribute("pageBlock", pageBlock);
+        model.addAttribute("pageCount", pageCount);
+        
 		return "/board/testBoard";
+	}
+	
+	@RequestMapping("testBoardPro")
+	public String testBoardPro(HttpServletRequest request, GuestBookDTO dto, Model model) {
+		HttpSession session = request.getSession();
+		String id = (String)session.getAttribute("memId");
+		dto.setId(id);
+		service.testBoardPro(dto);
+	
+		
+
+		return "redirect:/member/testBoard";
 	}
 	
 }

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -12,16 +13,27 @@
 </head>
 <body>
   <!-- Responsive navbar-->
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+              <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
             <div class="container">
-                <a class="navbar-brand" href="#!">Start Bootstrap</a>
+                <a class="navbar-brand" href="/blog/member/main">whoU</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                        <li class="nav-item"><a class="nav-link" href="#">Home</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#!">About</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#!">Contact</a></li>
-                        <li class="nav-item"><a class="nav-link active" aria-current="page" href="#">Blog</a></li>
+                        <li class="nav-item"><a class="nav-link active" aria-current="page" href="/blog/member/main">Home</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#!">board</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#!">imgBoard</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#!">imgBoard2</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/blog/guest/guestbook">guestBook</a></li>
+                    </ul>
+                    <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                    	<c:if test="${sessionScope.memId != null}">
+	                        <li class="nav-item"><a class="nav-link" href="/blog/member/updateForm">myPage</a></li>
+	                        <li class="nav-item"><a class="nav-link" href="/blog/member/logout">logout</a></li>
+                    	</c:if>
+                    	<c:if test="${sessionScope.memId == null}">
+	                        <li class="nav-item"><a class="nav-link" href="/blog/member/inputForm">join</a></li>
+	                        <li class="nav-item"><a class="nav-link" href="/blog/member/login">login</a></li>
+                        </c:if>
                     </ul>
                 </div>
             </div>
@@ -59,25 +71,45 @@
                         <div class="card bg-light">
                             <div class="card-body">
                                 <!-- Comment form-->
-                                <form class="mb-4"><textarea class="form-control" rows="3" placeholder="Join the discussion and leave a comment!"></textarea></form>
-                                <!-- Comment with nested comments-->
-                                <div class="d-flex mb-4">
-                                    <!-- Parent comment-->
-                                    <div class="flex-shrink-0"><img class="rounded-circle" src="https://dummyimage.com/50x50/ced4da/6c757d.jpg" alt="..." /></div>
-                                    <div class="ms-3">
-                                        <div class="fw-bold">Commenter Name</div>
-                                        If you're going to lead a space frontier, it has to be government; it'll never be private enterprise. Because the space frontier is dangerous, and it's expensive, and it has unquantified risks.
-                                    </div>
-                                </div>
+                                <form action="testBoardPro" method="post" class="mb-2">
+                                	<textarea class="form-control" name="subject" rows="3" placeholder="Join the discussion and leave a comment!"></textarea>
+                                	<div class="d-flex justify-content-end ">
+	                                	<input type="submit" class="btn btn-primary mt-3" value="완료" />
+                                	</div>
+                                </form>
                                 <!-- Single comment-->
-                                <div class="d-flex">
-                                    <div class="flex-shrink-0"><img class="rounded-circle" src="https://dummyimage.com/50x50/ced4da/6c757d.jpg" alt="..." /></div>
-                                    <div class="ms-3">
-                                        <div class="fw-bold">Commenter Name</div>
-                                        When I look at the universe and all the ways the universe wants to kill us, I find it hard to reconcile that with statements of beneficence.
-                                    </div>
-                                </div>
+                                <c:forEach var="dto" items="${list}">
+	                                <div class="d-flex mb-2">
+	                                    <div class="flex-shrink-0"><img class="rounded-circle" src="https://dummyimage.com/50x50/ced4da/6c757d.jpg" alt="..." /></div>
+	                                    <div class="ms-3 w-100">
+	                                        <div class="fw-bold">${dto.id}</div>
+	                                        ${dto.subject}
+	                                    </div>                                   
+	                                   
+	                                </div>
+	                                <hr class="my-0 mb-2" />
+                                </c:forEach>
                             </div>
+                           
+                         <!-- Pagination-->
+		                   	<nav aria-label="Page navigation example">
+		                        <ul class="pagination justify-content-center my-4">
+		                           <c:if test="${endPage > pageBlock}">
+		                               <li class="page-item disabled"><a class="page-link" href="testBoard?pageNum=${startPage-pageBlock}" tabindex="-1" aria-disabled="true">Newer</a></li>
+		                     	   </c:if>
+		                           <c:forEach var="num" begin="${startPage}" end="${endPage}">
+		                               <c:if test="${num==currentPage}">
+		                                  <li class="page-item active" aria-current="page"><a class="page-link" href="testBoard?pageNum=${num}">${num }</a></li>
+		                         	   </c:if>
+		                               <c:if test="${num != currentPage}">
+		                                  <li class="page-item " aria-current="page"><a class="page-link" href="testBoard?pageNum=${num}">${num }</a></li>
+		                        	   </c:if>
+		                     	   </c:forEach>
+		                           <c:if test="${endPage < pageCount}">
+		                               <li class="page-item"><a class="page-link" href="testBoard?pageNum=${startPage+pageBlock}">Older</a></li>
+		                     	   </c:if>
+		                        </ul>
+	                    	</nav>
                         </div>
                     </section>
                 </div>

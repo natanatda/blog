@@ -28,4 +28,17 @@
 	<update id="updatePro">
 		update member set pw=#{pw}, name=#{name}, birth=#{birth}, phone=#{phone}, email=#{email} where id=#{id}
 	</update>
+	
+	<insert id="testBoardPro">
+		insert into guestbook values(guest_seq.NEXTVAL,#{id},#{subject},sysdate)
+	</insert>
+	
+	<select id="testList" resultType="test.spring.component.GuestBookDTO">
+		select * from (select e.*, rownum r from (select id,subject,reg_date from guestbook order by reg_date desc)e)
+		where r between #{start} and #{end}	
+	</select>
+	
+	<select id="count" resultType="int">
+		select count(*) from guestbook	
+	</select>
   </mapper>
