@@ -10,10 +10,10 @@
 	 -->
 	 
 	<sql id="col">
-		img_board1_num,id,subject,content,readcount,ip,reg_date
+		img_board1_num,id,subject,content,readcount,ip,reg_date,img
 	</sql>
 	<sql id="getDTO">
-		#{id},#{subject},#{content},#{readcount},#{ip},#{reg_date}
+		#{id},#{subject},#{content},#{readcount},#{ip},#{reg_date},#{img}
 	</sql>
 	<sql id="defaultSort">
 		order by img_board1_num
@@ -46,7 +46,7 @@
 		<update id="update">
 		update img_board1
 		<set>
-			id=#{id}, subject=#{subject}, content=#{content} 
+			id=#{id}, subject=#{subject}, content=#{content} , img=#{img}
 			<where>
 				img_board1_num=#{img_board1_num}
 			</where>

@@ -26,8 +26,8 @@
             </div>
         </nav>
         <div class="container mt-5">
-            <div class="row">
-                <div class="col-lg-8">
+            <div class="row" >
+                <div class="col-lg-8"  style="margin-bottom:80px;">
                     <!-- Post content-->
                     <article>
                         <!-- Post header-->
@@ -40,14 +40,18 @@
                             <a class="badge bg-secondary text-decoration-none link-light" href="#!">Web Design</a>
                             <a class="badge bg-secondary text-decoration-none link-light" href="#!">Freebies</a>
                         </header>
-                        <!-- Preview image figure-->
-                        <figure class="mb-4"><img class="img-fluid rounded" src="https://dummyimage.com/900x400/ced4da/6c757d.jpg" alt="..." /></figure>
-                        <!-- Post content-->
+                        <c:if test="${article.img!=null }">
+	                        <a href="#!"><img class="card-img-top" src="/blog/resources/imgBoard1/${article.img}" alt="..." style=""/></a>
+                        </c:if>
+                        <c:if test="${article.img==null }">
+	                        <figure class="mb-4"><img class="img-fluid rounded" src="https://dummyimage.com/900x400/ced4da/6c757d.jpg" alt="..." /></figure>
+                        </c:if>
                         ${article.content }
                     </article>
+                    <%--
                     <!-- Comments section-->
                     <section class="mb-5">
-                        <div class="card bg-light">
+                        <div class="card bg-light" >
                             <div class="card-body">
                                 <!-- Comment form-->
                                 <form class="mb-4"><textarea class="form-control" rows="3" placeholder="Join the discussion and leave a comment!"></textarea></form>
@@ -87,6 +91,7 @@
                             </div>
                         </div>
                     </section>
+                     --%>
                 </div>
                 <!-- Side widgets-->
                 <div class="col-lg-4">
@@ -127,6 +132,9 @@
                         <div class="card-header">Side Widget</div>
                         <div class="card-body">You can put anything you want inside of these side widgets. They are easy to use, and feature the Bootstrap 5 card component!</div>
                     </div>
+                    <input type="button"  class="btn btn-primary" value="list" style="margin-top:50px; margin-bottom:80px;" onclick="location='list'" >
+                    <input type="button"  class="btn btn-primary" value="update" style="margin-top:50px; margin-bottom:80px;" onclick="location='update?num=${article.img_board1_num}'" >
+                    <input type="button"  class="btn btn-primary" value="delete" style="margin-top:50px; margin-bottom:80px;" onclick="location='delete?num=${article.img_board1_num}'" >
                 </div>
             </div>
         </div>
@@ -136,70 +144,6 @@
         </footer>
 </body>
 </html>
-
-
-<%-- 
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<!DOCTYPE html>
-<html>
-<head>
-	<title>게시판</title>
-</head>
-<body>  
-<h3>글내용 보기</h3>
-	<form>
-		<table border="1">  
-		  <tr height="30">
-		    <td align="center" width="125">글번호</td>
-		    <td align="center" width="125">${article.num }</td>
-		    <td align="center" width="125">조회수</td>
-		    <td align="center" width="125">${article.readcount} </td>
-		  </tr>
-		  <tr height="30">
-		    <td align="center" width="125">작성자</td>
-		    <td align="center" width="125">${article.writer}</td>
-		    <td align="center" width="125">작성일</td>
-		    <td align="center" width="125">${article.reg_date}</td>
-		  </tr>
-		  <tr height="30">
-		    <td align="center" width="125">글제목</td>
-		    <td align="center" width="375" align="center" colspan="3">
-			     ${article.subject}</td>
-		  </tr>
-		  <tr>
-		    <td align="center" width="125">글내용</td>
-		    <td align="left" width="375" colspan="3"><pre>${article.content}</pre></td>
-		  </tr>
-		  <tr height="30">      
-		    <td colspan="4" align="right" >
-		    	<c:if test="${sessionScope.id!=null }">
-		    		<c:if test="${writerTrue}">
-					  <input type="button" value="글수정" 
-				       onclick="location='update?num=${article.num}&pageNum=${pageNum}'">
-					   &nbsp;&nbsp;&nbsp;&nbsp;
-					  <input type="button" value="글삭제" 
-				       onclick="location='delete?num=${article.num}&pageNum=${pageNum}'">
-					   &nbsp;&nbsp;&nbsp;&nbsp;
-					</c:if>
-		    		<c:if test="${adminTrue}">
-				      <input type="button" value="답글쓰기" 
-				       onclick="location='write?num=${article.num}&ref=${article.ref}&re_step=${article.re_step}&re_level=${article.re_level}'">
-					   &nbsp;&nbsp;&nbsp;&nbsp;
-			    	</c:if>
-		    	</c:if>
-		       <input type="button" value="글목록" 
-		       onclick="location='list?pageNum=${pageNum}'">
-		      	
-		    </td>
-		  </tr>
-		</table>    
-	</form>      
-</body>
-</html>
-
- --%>
 
 
 

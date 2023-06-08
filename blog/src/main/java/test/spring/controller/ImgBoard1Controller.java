@@ -1,6 +1,7 @@
 package test.spring.controller;
 
-import java.sql.Timestamp;
+import java.io.File;
+import java.sql.Timestamp; 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import test.spring.component.ImgBoard1DTO;
 import test.spring.service.ImgBoard1Service;
@@ -82,8 +85,8 @@ public class ImgBoard1Controller {
 			board_num = "1";
 		}
 		int img_board1_num = Integer.parseInt(board_num);
+		service.addReadcount(img_board1_num);
 		ImgBoard1DTO dto = service.getArticle(img_board1_num);
-		System.out.println(dto.getContent()+" "+img_board1_num);
 		model.addAttribute("article", dto);
 		return "/imgBoard1/content";
 	}
@@ -92,14 +95,93 @@ public class ImgBoard1Controller {
 		return "/imgBoard1/write";
 	}
 	@RequestMapping("insert")
-	public String insert(HttpServletRequest request, ImgBoard1DTO article, Model model) {
+	public String insert(MultipartFile imgFile,HttpServletRequest request, ImgBoard1DTO article, Model model) {
 		article.setId("ee");
 		article.setReg_date(new Timestamp(System.currentTimeMillis()));
 		article.setIp(request.getRemoteAddr());
 		article.setReadcount(0);
-		System.out.println(article);
 		service.insert(article);
+
+		String uploadPath = request.getRealPath("/resources/imgBoard1");
+		System.out.println(imgFile.getOriginalFilename());
+		System.out.println(imgFile.getSize());
+		int index = 0;
+		String orgName = imgFile.getOriginalFilename();
+		String name = orgName.substring(0, orgName.indexOf("."));
+		String ext = orgName.substring( orgName.lastIndexOf("."));
+		
+		File copy = new File(uploadPath+"//"+imgFile.getOriginalFilename());
+		String type = imgFile.getContentType();
+		try {
+			while(copy.isFile()) {
+				index++;
+				copy = new File(uploadPath+"//"+name+"("+index+")"+ext);
+			}
+			if(copy.exists()) {
+				if(type.split("/")[0].equals("image")){
+					imgFile.transferTo(copy);
+				}
+			}else {
+				if(type.split("/")[0].equals("image")){
+					imgFile.transferTo(copy);
+				}
+			}
+		}catch(Exception e) {e.printStackTrace();}
+		return "redirect:/imgBoard1/list";
+	}
+	@RequestMapping("update")
+	public String update(HttpServletRequest request, Model model) {
+		int num = 0;
+		if(request.getParameter("num")!=null) {
+			num = Integer.parseInt((String)request.getParameter("num"));
+			model.addAttribute("num", num);
+			ImgBoard1DTO article = service.getArticle(num);
+			model.addAttribute("article", article);
+		}
+		return "/imgBoard1/write";
+	}
+	@RequestMapping("updatePro")
+	public String update(MultipartFile imgFile,ImgBoard1DTO article,HttpServletRequest request) {
+		article.setId("ee");
+		article.setImg_board1_num(Integer.parseInt((String)request.getParameter("num")));
+		service.update(article);
+		String uploadPath = request.getRealPath("/resources/imgBoard1");
+		System.out.println(imgFile.getOriginalFilename());
+		System.out.println(imgFile.getSize());
+		int index = 0;		
+		String orgName = imgFile.getOriginalFilename();
+		String name = orgName.substring(0, orgName.indexOf("."));
+		String ext = orgName.substring( orgName.lastIndexOf("."));
+		
+		File copy = new File(uploadPath+"//"+imgFile.getOriginalFilename());
+		String type = imgFile.getContentType();
+		try {
+			while(copy.isFile()) {
+				index++;
+				copy = new File(uploadPath+"//"+name+"("+index+")"+ext);
+			}
+			if(copy.exists()) {
+				if(type.split("/")[0].equals("image")){
+					imgFile.transferTo(copy);
+				}
+			}else {
+				if(type.split("/")[0].equals("image")){
+					imgFile.transferTo(copy);
+				}
+			}
+		}catch(Exception e) {e.printStackTrace();}
 		return "redirect:/imgBoard1/list";
 	}
 	
+//	@RequestMapping("delete")
+//	public String delete(Model model, int num) {
+//		model.addAttribute("num", num);
+//		return "/imgBoard1/delete";
+//	}
+	
+	@RequestMapping("delete")
+	public String del(int num){
+		service.delete(num);
+		return "redirect:/imgBoard1/list";
+	}
 }

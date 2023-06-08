@@ -13,4 +13,5 @@ public class ImgBoard1DTO {
 	private int readcount;
 	private String ip;
 	private Timestamp reg_date;
+	private String img;
 }

@@ -63,7 +63,12 @@
                 <div class="col-lg-8">
                     <!-- Featured blog post-->
                     <div class="card mb-4">
-                        <a href="#!"><img class="card-img-top" src="https://dummyimage.com/850x350/dee2e6/6c757d.jpg" alt="..." /></a>
+                    	<c:if test="${dto.img!=null }">
+							<a href="#!"><img class="card-img-top" src="/blog/resources/img/${dto.img}" alt="..." /></a>
+						</c:if>
+						<c:if test="${dto.img==null }">
+					    	<a href="#!"><img class="card-img-top" src="https://dummyimage.com/850x350/dee2e6/6c757d.jpg" alt="..." /></a>
+						</c:if>
                         <div class="card-body">
                             <div class="small text-muted">${firstList.reg_date }</div>
                             <h2 class="card-title">${firstList.subject }</h2>
@@ -78,7 +83,12 @@
 		                   	<c:forEach var="dto" items="${dtoSemiList}">
 								<div class="col-lg-6">
 									<div class="card mb-4">
-				                        <a href="#!"><img class="card-img-top" src="https://dummyimage.com/850x350/dee2e6/6c757d.jpg" alt="..." /></a>
+										<c:if test="${dto.img!=null }">
+					                        <a href="#!"><img class="card-img-top" src="/blog/resources/imgBoard1/${dto.img}" alt="..." /></a>
+										</c:if>
+										<c:if test="${dto.img==null }">
+					                        <a href="#!"><img class="card-img-top" src="https://dummyimage.com/850x350/dee2e6/6c757d.jpg" alt="..." /></a>
+										</c:if>
 				                        <div class="card-body">
 				                            <div class="small text-muted">${dto.reg_date }</div>
 				                            <h2 class="card-title">${dto.subject }</h2>
@@ -149,6 +159,7 @@
                         <div class="card-header">Side Widget</div>
                         <div class="card-body">You can put anything you want inside of these side widgets. They are easy to use, and feature the Bootstrap 5 card component!</div>
                     </div>
+					<a class="btn btn-primary" href="write">write</a>
                 </div>
             </div>
         </div>
