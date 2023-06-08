@@ -16,12 +16,7 @@ public class SampleController {
 	@Autowired
 	private SampleService service;
 	
-	@RequestMapping("test")
-	public String testPrint(Model model) {
-		List<SampleDTO> list = service.sampleTest();
-		model.addAttribute("list", list);
-		return "/sample/test";
-	}
+
 	
 	@RequestMapping("test2")
 	public String testPrint2() {

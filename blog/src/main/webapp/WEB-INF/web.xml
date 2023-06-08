@@ -26,6 +26,7 @@
 				/WEB-INF/spring/appServlet/servlet-context.xml
 				/WEB-INF/spring/appServlet/member-context.xml
 				/WEB-INF/spring/appServlet/guestbook-context.xml
+				/WEB-INF/spring/appServlet/board-context.xml
 			</param-value>
 		</init-param>
 		<load-on-startup>1</load-on-startup>
