@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-        <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -93,7 +93,7 @@
       </div>
     </div>
     <footer class="my-3 text-center text-small">
-      <a class="btn btn-outline-dark"  href="/blog/member/blogHome">Home</a>
+      <a class="link-dark" href="/blog/member/main">Home</a>
     </footer>
   </div>
   

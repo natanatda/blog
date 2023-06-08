@@ -20,14 +20,14 @@ public class MemberController {
 	@Autowired
 	private MemberService service;
 	
-	@RequestMapping("blogHome")
+	@RequestMapping("main")
 	public String blogHome(HttpServletRequest request, HttpServletResponse response, Model model) {
 		HttpSession session = request.getSession();
 		String id = (String)session.getAttribute("memId");
 		Cookie [] cookies = request.getCookies();
 		if(cookies != null) {
 			for(Cookie cookie : cookies) {
-				if(cookie.getName().equals("remember-me")) {
+				if(cookie.getName().equals("cooRe")) {
 					String cooId = cookie.getValue();
 					model.addAttribute("cookies", cooId);
 					model.addAttribute("id", id);
@@ -35,7 +35,7 @@ public class MemberController {
 				}
 			}
 		}
-		return "/sample/blogHome";
+		return "/member/main";
 	}
 	
 	@RequestMapping("inputForm")
@@ -77,7 +77,7 @@ public class MemberController {
 				response.addCookie(coo2);
 				response.addCookie(coo3);
 			}
-			url = "/sample/blogHome";
+			url = "/member/main";
 			System.out.println("성공");
 		}else {
 			url = "/member/login";
@@ -87,7 +87,7 @@ public class MemberController {
 	}
 	
 	@RequestMapping("updateForm")
-	public String updateForm(HttpServletRequest request, Model model) {
+	public String sessionUpdateForm(HttpServletRequest request, Model model) {
 		HttpSession session = request.getSession();
 		String id = (String) session.getAttribute("memId");
 		if(id != null) {
@@ -103,7 +103,7 @@ public class MemberController {
 		String id = (String) session.getAttribute("memId");
 		dto.setId(id);
 		service.updatePro(dto);
-		return "/sample/blogHome";
+		return "/member/main";
 	}
 	
 	@RequestMapping("logout")
@@ -125,6 +125,6 @@ public class MemberController {
 				response.addCookie(c);
 			}
 		}
-		return "/sample/blogHome";
+		return "/member/main";
 	}
 }
