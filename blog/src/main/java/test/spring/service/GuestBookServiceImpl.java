@@ -21,7 +21,12 @@ public class GuestBookServiceImpl implements GuestBookService{
 	}
 	
 	@Override
-	public List<GuestBookDTO> list(){
-		return mapper.guestList();
+	public List<GuestBookDTO> list(int start, int end){
+		return mapper.guestList(start,end);
+	}
+	
+	@Override
+	public int count() {
+		return mapper.count();
 	}
 }

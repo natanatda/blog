@@ -7,5 +7,6 @@ import test.spring.component.GuestBookDTO;
 public interface GuestBookService {
 
 	public void insert(GuestBookDTO dto);
-	public List<GuestBookDTO> list();
+	public List<GuestBookDTO> list(int start, int end);
+	public int count();
 }
