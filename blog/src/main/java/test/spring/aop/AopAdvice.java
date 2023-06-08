@@ -23,7 +23,7 @@ public class AopAdvice {
 		HttpServletRequest request = sa.getRequest();
 		HttpSession session = request.getSession();
 		
-		Object obj ="/main";
+		Object obj ="/member/main";
 		System.out.println("ㄴㄴㄴㄴ");
 		if(session.getAttribute("memId") != null) {
 			obj = jp.proceed();
