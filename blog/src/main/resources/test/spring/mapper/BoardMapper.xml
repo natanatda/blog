@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-Mapper.dtd">
+
+  <mapper namespace="test.spring.mapper.BoardMapper">
+	
+	<select id="infoAll" resultType="test.spring.component.BoardDTO">
+		SELECT * FROM BOARD 
+		<where>
+	        <if test="id != null and board_num != 0">
+	            board_num=#{board_num} AND id=#{id}
+	        </if>
+	        <if test="id != null and board_num == 0">
+	            id=#{id}
+	        </if>
+	        <if test="id == null and board_num != 0">
+	            board_num=#{board_num}
+	        </if>
+	        <if test="id == null and board_num == 0">
+	            1=1
+	        </if>
+	    </where>
+		ORDER BY reg DESC
+	</select>
+	
+	<insert id="contentWrite">
+		insert into board values(board_seq.nextval, #{id}, #{subject}, #{content}, sysdate, 0)
+	</insert>
+	
+	<delete id="contentDel">
+		DELETE FROM BOARD WHERE board_num=#{board_num}
+	</delete>
+	
+	<update id="contentModify">
+		UPDATE board
+		<set>
+			<if test="subject != null">subject=#{subject},</if>
+			<if test="content != null">content=#{content}</if>
+		</set>
+		WHERE board_num=#{board_num}
+	</update>
+	
+  </mapper>

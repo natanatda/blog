@@ -11,18 +11,20 @@ import test.spring.component.SampleDTO;
 import test.spring.service.SampleService;
 
 @Controller
-@RequestMapping("/blog/*")
+@RequestMapping("/sample/*")
 public class SampleController {
-
 	@Autowired
 	private SampleService service;
 	
-	@RequestMapping("list")
-	public String sample(Model model) {
-		List<SampleDTO> list = service.all();
-		System.out.println(list);
-		
+	@RequestMapping("test")
+	public String testPrint(Model model) {
+		List<SampleDTO> list = service.sampleTest();
 		model.addAttribute("list", list);
-		return "/sample/list";
+		return "/sample/test";
+	}
+	
+	@RequestMapping("test2")
+	public String testPrint2() {
+		return "/sample/test2";
 	}
 }
