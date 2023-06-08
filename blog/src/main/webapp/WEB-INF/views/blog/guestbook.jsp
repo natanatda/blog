@@ -19,14 +19,17 @@
 	      alert("방명록를 작성하세요");
 	      return false;
 	    }
-	  }
+	}
+	function updateBtn(){
+		
+	}
 </script>
 </head>
 <body>
   <!-- Responsive navbar-->
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
             <div class="container">
-                <a class="navbar-brand" href="#!">Start Bootstrap</a>
+                <a class="navbar-brand" href="/blog/member/main">whoU</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
@@ -64,10 +67,15 @@
                             <div class="card-body">
                                 <!-- Comment form-->
                                 <form class="mb-4" method="post" action="insert" name="guestForm" onSubmit="return checkIt()">
-                                	<textarea class="form-control" rows="3" name="subject" placeholder="방명록을 작성해보세요~"></textarea>
-                                	<div class="justify-content-end d-flex">
-	                                	<button type="submit" class="btn btn-primary btn-sm">등  록</button>
-                                	</div>
+                                	<c:if test="${sessionScope.memId != null}">
+	                                	<textarea class="form-control" rows="3" name="subject" placeholder="방명록을 작성해보세요~"></textarea>
+	                                	<div class="justify-content-end d-flex">
+		                                	<button type="submit" class="btn btn-primary btn-sm">등  록</button>
+	                                	</div>
+                                	</c:if>
+                                	<c:if test="${sessionScope.memId == null}">
+                                		<textarea class="form-control" rows="3" name="subject" placeholder="로그인시 작성 가능" disabled></textarea>
+                                	</c:if>
                                 </form>
                                 <!-- Single comment-->
                                 <c:forEach var = "dto" items = "${list}">
@@ -76,19 +84,38 @@
 	                                    <div class="ms-3 w-100">
 	                                    	<fmt:formatDate value="${dto.reg_date}" pattern="yyyy-MM-dd HH:mm:ss" var="formattedDate" />
 	                                        <div class="fw-bold">${dto.id}&nbsp;&nbsp;${formattedDate}</div>
-	                                        ${dto.subject}
+	                                       
 	                                        <c:if test="${sessionScope.memId != null}">
 	                                        	<c:if test="${sessionScope.memId.equals(dto.id)}">
-			                                        <div class="justify-content-end d-flex">
-					                                	<button type="button" class="btn btn-light btn-xs" onclick="location='update'">수정</button>
-					                                	<button type="button" class="btn btn-light btn-xs" onclick="location='delete'">삭제</button>
-				                                	</div>
+	                                        		<c:if test="${a == null}">
+		                                        		 ${dto.subject}
+				                                        <div class="justify-content-end d-flex">
+						                                	<button type="button" class="btn btn-light btn-xs" onclick="location='guestbook?a=1&num=${dto.num}'">수정</button>
+						                                	<button type="button" class="btn btn-light btn-xs" onclick="location='delete?num=${dto.num }'">삭제</button>
+					                                	</div>
+				                                	</c:if>
+			                                	</c:if>
+		                                	</c:if>
+		                                	<c:if test="${sessionScope.memId != null}">
+	                                        	<c:if test="${sessionScope.memId.equals(dto.id)}">
+	                                        		<c:if test="${a != null}">
+	                                        			<c:if test="${num == (dto.num)}">
+	                                        			<form class="mb-4" method="post" action="update?num=${dto.num }">
+		                                        		    <textarea class="form-control" rows="3" name="subject">${dto.subject}</textarea>
+					                                        <div class="justify-content-end d-flex">
+							                                	<button type="submit" class="btn btn-light btn-xs">수정</button>
+							                                	<button type="button" class="btn btn-light btn-xs" onclick="location='guestbook'">취소</button>
+						                                	</div>
+					                                	</form>
+					                                	</c:if>
+				                                	</c:if>
 			                                	</c:if>
 		                                	</c:if>
 	                                        <hr>
 	                                    </div>
 	                                </div>
                                 </c:forEach>
+                                
                                  <nav aria-label="Pagination">
 			                        <hr class="my-0" />
 			                        <ul class="pagination justify-content-center my-4">
@@ -100,7 +127,7 @@
 			                                  <li class="page-item active" aria-current="page"><a class="page-link" href="guestbook?pageNum=${num}">${num }</a></li>
 			                         	   </c:if>
 			                               <c:if test="${num!=currentPage}">
-			                                  <li class="page-item" aria-current="page"><a class="page-link" href="guestbook?pageNum=${num}">${num }</a></li>
+			                                  <li class="page-item " aria-current="page"><a class="page-link" href="guestbook?pageNum=${num}">${num }</a></li>
 			                        	   </c:if>
 			                     	   </c:forEach>
 			                           <c:if test="${endPage < pageCount}">

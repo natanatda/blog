@@ -29,4 +29,14 @@ public class GuestBookServiceImpl implements GuestBookService{
 	public int count() {
 		return mapper.count();
 	}
+	
+	@Override
+	public void update(String subject, int num) {
+		mapper.update(subject, num);
+	}
+	
+	@Override
+	public void delete(int num) {
+		mapper.delete(num);
+	}
 }

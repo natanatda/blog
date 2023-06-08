@@ -13,4 +13,8 @@ public interface GuestBookMapper {
 	public List<GuestBookDTO> guestList(@Param("start")int start, @Param("end")int end);
 	
 	public int count();
+	
+	public void update(@Param("subject")String subject, @Param("num")int num);
+	
+	public void delete(int num);
 }

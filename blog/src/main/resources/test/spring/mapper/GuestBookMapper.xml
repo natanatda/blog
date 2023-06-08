@@ -10,14 +10,20 @@
 	</insert>
 	
 	<select id="guestList" resultType="test.spring.component.GuestBookDTO"> 
-		select id,subject,reg_date,r from (select id,subject,reg_date,rownum r 
-		from (select id,subject,reg_date from guestbook order by reg_date desc) 
-		order by reg_date desc) where r between #{start} and #{end}        
+		select num,id,subject,reg_date,r from (select num,id,subject,reg_date,rownum r 
+		from (select num,id,subject,reg_date from guestbook order by num desc) 
+		order by num desc) where r between #{start} and #{end}        
 	</select>
 	
 	<select id="count" resultType="int">
 		select count(*) from guestbook
 	</select>
 	
+	<update id="update">
+		update guestbook set subject=#{subject} where num=#{num}
+	</update>
 	
+	<delete id="delete">
+		delete from guestbook where num=#{num}
+	</delete>
 </mapper>
