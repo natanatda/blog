@@ -23,6 +23,7 @@
 			<param-value>
 				/WEB-INF/spring/appServlet/servlet-context.xml
 				/WEB-INF/spring/appServlet/board-context.xml
+
 			</param-value>
 		</init-param>
 		<load-on-startup>1</load-on-startup>
@@ -51,6 +52,15 @@
 	<filter-mapping>
 		<filter-name>encodingFilter</filter-name>
 		<url-pattern>/*</url-pattern>
+		
+		<!-- 아래에 js 및 css 확장자 추가 -->
+	    <url-pattern>*.js</url-pattern>
+	    <url-pattern>*.css</url-pattern>
+	    <url-pattern>*.jpg</url-pattern>
+	    <url-pattern>*.ico</url-pattern>
+	    <url-pattern>*.gif</url-pattern>
+	    <url-pattern>*.png</url-pattern>
+	    <url-pattern>*.html</url-pattern>
 	</filter-mapping>
 
 </web-app>

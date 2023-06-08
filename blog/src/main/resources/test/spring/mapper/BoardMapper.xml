@@ -4,6 +4,9 @@
   "https://mybatis.org/dtd/mybatis-3-Mapper.dtd">
 
   <mapper namespace="test.spring.mapper.BoardMapper">
-
+	
+	<select id="listAll" resultType="test.spring.component.BoardDTO">
+		SELECT * FROM BOARD WHERE id=#{id} ORDER BY reg DESC
+	</select>
 
   </mapper>
