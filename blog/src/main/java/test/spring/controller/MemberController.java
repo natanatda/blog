@@ -127,4 +127,11 @@ public class MemberController {
 		}
 		return "/member/main";
 	}
+	
+	@RequestMapping("testBoard")
+	public String testBoard(HttpServletRequest request, MemberDTO dto) {
+
+		return "/board/testBoard";
+	}
+	
 }
