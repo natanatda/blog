@@ -19,8 +19,17 @@ public class BoardController {
 	
 	@RequestMapping("list")
 	public String listAll(Model model, BoardDTO dto) {
-		System.out.println(dto);
+		if (dto != null) {
+	        String content = dto.getContent();
+	        if (content != null) {
+	            String cssRegex = "<style[^>]*>[\\s\\S]*?</style>";
+	            String cleanedContent = content.replaceAll(cssRegex, "");
+	            dto.setContent(cleanedContent);
+	        }
+	    }
+		
 		List<BoardDTO> list = service.infoAll(dto);
+		System.out.println(list);
 		model.addAttribute("list", list);
 		return "/board/list";
 	}
