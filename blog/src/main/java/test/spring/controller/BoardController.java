@@ -1,11 +1,13 @@
 package test.spring.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import test.spring.component.BoardDTO;
 import test.spring.service.BoardService;
@@ -18,24 +20,40 @@ public class BoardController {
 	private BoardService service;
 	
 	@RequestMapping("list")
-	public String listAll(Model model, BoardDTO dto) {
-		if (dto != null) {
-	        String content = dto.getContent();
+	public String sessionListAll(Model model, BoardDTO dto, @RequestParam(defaultValue = "1") int pageNumber) {
+		int pageSize = 5; // 페이지당 데이터 개수
+	    int startIndex = (pageNumber - 1) * pageSize; // 시작 인덱스
+	    
+		List<BoardDTO> list = service.infoAll(dto);
+		//CSS 태그 제거
+		for (BoardDTO boardDTO : list) {
+	        String content = boardDTO.getContent();
 	        if (content != null) {
-	            String cssRegex = "<style[^>]*>[\\s\\S]*?</style>";
-	            String cleanedContent = content.replaceAll(cssRegex, "");
-	            dto.setContent(cleanedContent);
+		        // content 수정 작업 수행
+		        // 예: CSS 태그 제거
+		        String cleanedContent = content.replaceAll("<[^>]+>", "");
+		        boardDTO.setContent(cleanedContent);
 	        }
 	    }
 		
-		List<BoardDTO> list = service.infoAll(dto);
-		System.out.println(list);
+		// 시작 인덱스부터 pageSize만큼의 데이터 추출
+	    List<BoardDTO> pagedData = new ArrayList<>();
+	    for (int i = startIndex; i < startIndex + pageSize && i < list.size(); i++) {
+	        pagedData.add(list.get(i));
+	    }
+	    
+	    // 전체 페이지 수 계산
+	    int totalPages = (list.size() + pageSize - 1) / pageSize;
+	    
+	    model.addAttribute("totalPages", totalPages);
 		model.addAttribute("list", list);
+		model.addAttribute("pagedData", pagedData);
+		model.addAttribute("pageNumber", pageNumber);
 		return "/board/list";
 	}
 	
 	@RequestMapping("content")
-	public String content(Model model, BoardDTO dto) {
+	public String sessionContent(Model model, BoardDTO dto) {
 		List<BoardDTO> list = service.infoAll(dto);
 		model.addAttribute("list", list);
 		return "/board/content";
@@ -43,31 +61,31 @@ public class BoardController {
 	
 	
 	@RequestMapping("writeForm")
-	public String writeForm() {
+	public String sessionWriteForm() {
 		return "/board/writeForm";
 	}
 	
 	@RequestMapping("writePro")
-	public String writePro(BoardDTO dto) {
+	public String sessionWritePro(BoardDTO dto) {
 		service.contentWrite(dto);
-		return "/board/list";
+		return "redirect:/board/list";
 	}
 	
 	@RequestMapping("modifyForm")
-	public String modifyForm(Model model, BoardDTO dto) {
+	public String sessionModifyForm(Model model, BoardDTO dto) {
 		List<BoardDTO> list = service.infoAll(dto);
 		model.addAttribute("list", list);
 		return "/board/modifyForm";
 	}
 	
 	@RequestMapping("modifyPro")
-	public String modifyPro(BoardDTO dto) {
+	public String sesseionModifyPro(BoardDTO dto) {
 		service.contentModify(dto);
 		return "redirect:/board/content?board_num="+dto.getBoard_num();
 	}
 	
 	@RequestMapping("deletePro")
-	public String deletePro(int board_num) {
+	public String sessionDeletePro(int board_num) {
 		service.contentDel(board_num);
 		return "/board/list";
 	}

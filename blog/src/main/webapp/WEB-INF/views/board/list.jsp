@@ -32,40 +32,57 @@
         <header class="py-5 bg-light border-bottom mb-4">
             <div class="container">
                 <div class="text-center my-5">
-                    <h1 class="fw-bolder">My Board List</h1>
+                    <h1 class="fw-bolder">Welcome! Board Blog</h1>
                     <p class="lead mb-0">There are only articles in text format. (Not images)</p>
                 </div>
             </div>
         </header>
         <!-- Page content-->
         <div class="container">
+        <c:if test="${sessionScope.memId != null }">
+        	<input type="button" value="글쓰기" onclick="location='writeForm'">
+       	</c:if>
             <div class="row">
                 <!-- Blog entries-->
                 <div class="col-lg-8">
                     <!-- Featured blog post-->
-                    <c:forEach var="dto" items="${list}">
-	                    <div class="card mb-4">
-	                        <div class="card-body">
-	                            <div class="small text-muted">${dto.reg}</div>
-	                            <h2 class="card-title">${dto.subject}</h2>
-	                            <p class="card-text">${dto.content}</p>
-	                            <a class="btn btn-primary" href="/blog/board/content?board_num=${dto.board_num }">Read more →</a>
-	                        </div>
-	                    </div>
+                    <c:forEach var="dto" items="${pagedData}" varStatus="loop">
+                    	<c:if test="${loop.index < 5}">
+		                    <div class="card mb-4">
+		                        <div class="card-body">
+		                            <div class="small text-muted">${dto.reg} </div>
+		                            written by ${dto.id }
+		                            <h2 class="card-title">${dto.subject}</h2>
+		                            <p class="card-text">${dto.content}</p>
+		                            <a class="btn btn-primary" href="/blog/board/content?board_num=${dto.board_num }">Read more →</a>
+		                        </div>
+		                    </div>
+	                    </c:if>
                     </c:forEach>
 
                     <!-- Pagination-->
                     <nav aria-label="Pagination">
                         <hr class="my-0" />
                         <ul class="pagination justify-content-center my-4">
-                            <li class="page-item disabled"><a class="page-link" href="#" tabindex="-1" aria-disabled="true">Newer</a></li>
-                            <li class="page-item active" aria-current="page"><a class="page-link" href="#!">1</a></li>
-                            <li class="page-item"><a class="page-link" href="#!">2</a></li>
-                            <li class="page-item"><a class="page-link" href="#!">3</a></li>
-                            <li class="page-item disabled"><a class="page-link" href="#!">...</a></li>
-                            <li class="page-item"><a class="page-link" href="#!">15</a></li>
-                            <li class="page-item"><a class="page-link" href="#!">Older</a></li>
-                        </ul>
+                        	<!-- varStatus="page"는 반복 횟수에 대한 정보를 가지고 있어서 page.index로 불러옴 -->
+							<c:forEach begin="1" end="${totalPages}" varStatus="page">
+								<c:choose>
+									<c:when test="${page.index == pageNumber}">
+										<li class="page-item active" aria-current="page">
+											<a class="page-link" href="/blog/board/list?pageNumber=${page.index}">${page.index}</a>
+										</li>
+									</c:when>
+									<c:otherwise>
+										<li class="page-item">
+											<a class="page-link" href="/blog/board/list?pageNumber=${page.index}">${page.index}</a>
+										</li>
+									</c:otherwise>
+								</c:choose>
+							</c:forEach>
+							<li class="page-item">
+								<a class="page-link" href="/blog/board/list?pageNumber=${pageNumber + 1}">Next</a>
+							</li>
+						</ul>
                     </nav>
                 </div>
                 <!-- Side widgets-->

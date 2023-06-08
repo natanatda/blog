@@ -72,10 +72,11 @@
 	                            <p class="fs-5 mb-4">${list.content}</p>
 	                        </section>
 	                    </article>
-	                    <input type="button" value="수정" onclick="location='/blog/board/modifyForm?board_num=${list.board_num}&id=${list.id }'">
-	                    <input type="button" id="delBt" value="삭제">
-                    	<c:if test="${sessionScope.Id == list.id}">
+                    	<c:if test="${sessionScope.memId == list.id}">
+		                    <input type="button" value="수정" onclick="location='/blog/board/modifyForm?board_num=${list.board_num}&id=${list.id }'">
+		                    <input type="button" id="delBt" value="삭제">
                     	</c:if>
+	                    <input type="button" value="목록으로" onclick="location='/blog/board/list'">
                     </c:forEach>
 
                 </div>

@@ -16,6 +16,12 @@
 	<script type="text/javascript" src="/blog/resources/static/libs/smarteditor/js/service/HuskyEZCreator.js" charset="utf-8"></script>
 	<script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.min.js"></script>
 	
+	<c:if test="${sessionScope.memId ==null }">
+		<script>
+			alert("잘못된 경로입니다.");
+			location='/member/main';
+		</script>	
+	</c:if>
 	
 </head>
 <body>
@@ -39,7 +45,7 @@
             <div class="row">
                 <div class="col-lg-8">
                 <form method="post" action="writePro"  onsubmit="return submitContents()">
-                	<input type="hidden" name="id" value="${list.id}">
+                	<input type="hidden" name="id" value="${sessionScope.memId}">
 					<%-- 제목 --%>
 					<input type="text" placeholder="제목을 작성하세요" name="subject" style="width: 100%;">
 					
