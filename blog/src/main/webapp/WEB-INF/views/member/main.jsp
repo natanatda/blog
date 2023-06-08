@@ -28,7 +28,7 @@
                         <li class="nav-item"><a class="nav-link" href="#!">board</a></li>
                         <li class="nav-item"><a class="nav-link" href="#!">imgBoard</a></li>
                         <li class="nav-item"><a class="nav-link" href="#!">imgBoard2</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#!">guestBook</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/blog/guest/guestbook">guestBook</a></li>
                     </ul>
                     <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                     	<c:if test="${sessionScope.memId != null}">

@@ -18,4 +18,6 @@
 	<select id="count" resultType="int">
 		select count(*) from guestbook
 	</select>
+	
+	
 </mapper>
