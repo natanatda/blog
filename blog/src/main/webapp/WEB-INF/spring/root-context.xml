@@ -3,32 +3,51 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:mybatis-spring="http://mybatis.org/schema/mybatis-spring"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
 	xsi:schemaLocation="http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring-1.2.xsd
 		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
-		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
 	
 	<!-- Root Context: defines shared resources visible to all other web components -->
 	
-	<!-- DB 연결 -->
+	
 	<bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
-		<property name="driverClassName" value="net.sf.log4jdbc.sql.jdbcapi.DriverSpy" />
+		<property name="driverClassName" value="net.sf.log4jdbc.sql.jdbcapi.DriverSpy"/>
+		<!-- 집에서 58.73.200.225 학원에서 192.168.219.123 -->
 		<property name="jdbcUrl" value="jdbc:log4jdbc:oracle:thin:@192.168.219.123:1521:orcl" />
 		<property name="username" value="class01" />
 		<property name="password" value="class" />
 	</bean>
 	
-	<!-- 풀 설정 -->
+	<!-- cp: ConnectionPool(커넥션 객체를 관리하는 구역) -->
+	<!-- orl12510은 코드문제아니고 서버메모리 부족해서 나는 오류임 -->
+	<!-- 연결이 끊어지게 되면 커넥션풀로 커넥션 객체가 반환되어 돌아오게 되어 재사용하게 됨 -->
 	<bean id="dataSource" class="com.zaxxer.hikari.HikariDataSource" destroy-method="close">
-		<constructor-arg ref="hikariConfig" />
+		<constructor-arg ref="hikariConfig"/>
 	</bean>
 	
-	<!-- MyBatis 설정 -->
-	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
 		<property name="dataSource" ref="dataSource" />
-		<property name="configLocation"	value="classpath:config/mybatis-config.xml" />
 	</bean>
+	
+	<tx:annotation-driven />
+	
+	<!-- mybatis -->
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource"/>
+		<property name="configLocation" value="classpath:config/mybatis-config.xml" />
+	</bean>
+	
+	<mybatis-spring:scan base-package="test.spring.mapper"/>
 
-	<!-- MyBatis 세팅 읽기 -->
-	<mybatis-spring:scan base-package="test.spring.mapper" />
 	<context:component-scan base-package="test.spring.service" />
+	
+	<context:component-scan base-package="test.spring.aop" />
+	<aop:aspectj-autoproxy />
+	<context:annotation-config />
+	
+		
 </beans>

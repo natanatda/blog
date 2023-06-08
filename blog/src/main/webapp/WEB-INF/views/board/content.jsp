@@ -26,6 +26,7 @@
 						},
 						success : function(result) {
 							alert('삭제 되었습니다');
+							location="/blog/board/list";
 						},
 						error : function() {
 							alert('다시 시도해주세요');

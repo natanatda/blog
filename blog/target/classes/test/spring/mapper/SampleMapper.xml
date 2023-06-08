@@ -2,10 +2,11 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-Mapper.dtd">
+  
+<mapper namespace="test.spring.mapper.SampleMapper">
 
-  <mapper namespace="test.spring.mapper.SampleMapper">
-  	<select id="sampleTest" resultType="test.spring.component.SampleDTO">
-  		select * from sample
-  	</select>
-
-  </mapper>
+	<select id="sampleList" resultType="test.spring.component.SampleDTO"> 
+		select * from sample                    
+	</select>
+	
+</mapper>
