@@ -16,6 +16,21 @@
 	<script>
 		$(document).ready(function() {
 			var isTime;
+			isTime = window.setInterval('time()', 1000);
+			$.ajax({
+				url : "/blog/board/time",
+				success : function(result){
+					$("#koreanTime").html(result);
+				}
+			});
+			
+			$.ajax({
+				url : "/blog/board/calendar",
+				success : function(result){
+					$("#calendarSet").html(result);
+				}
+			});
+			
 			$("#delBt").click(function() {
 				if (confirm("수정 하시겠습니까?")) {
 					var boardNum = parseInt("${list.board_num}");
@@ -35,6 +50,16 @@
 				}
 			});
 		});
+		
+		
+		function time(){
+			$.ajax({
+				url : "/blog/board/time",
+				success : function(result){
+					$("#koreanTime").html(result);
+				}
+			});
+		}
 	</script>
 	
 </head>
@@ -129,6 +154,16 @@
                     <div class="card mb-4">
                         <div class="card-header">Side Widget</div>
                         <div class="card-body">You can put anything you want inside of these side widgets. They are easy to use, and feature the Bootstrap 5 card component!</div>
+                    </div>
+                    <!-- 시계  -->
+                    <div class="card mb-4">
+                    	<div class="card-header">Korean Time</div>
+                    	<div class="card-body" id="koreanTime"></div>
+                    </div>
+                    <!-- 달력  -->
+                    <div class="card mb-4">
+                    	<div class="card-header">Calendar</div>
+                    	<div class="card-body" id="calendarSet"></div>
                     </div>
                 </div>
             </div>
