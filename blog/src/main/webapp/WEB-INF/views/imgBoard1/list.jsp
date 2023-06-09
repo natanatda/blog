@@ -63,10 +63,10 @@
                 <div class="col-lg-8">
                     <!-- Featured blog post-->
                     <div class="card mb-4">
-                    	<c:if test="${dto.img!=null }">
-							<a href="#!"><img class="card-img-top" src="/blog/resources/img/${dto.img}" alt="..." /></a>
+                    	<c:if test="${firstList.img!=null }">
+							<a href="#!"><img class="card-img-top" src="/blog/resources/imgBoard1/${firstList.img}" alt="..." /></a>
 						</c:if>
-						<c:if test="${dto.img==null }">
+						<c:if test="${firstList.img==null }">
 					    	<a href="#!"><img class="card-img-top" src="https://dummyimage.com/850x350/dee2e6/6c757d.jpg" alt="..." /></a>
 						</c:if>
                         <div class="card-body">

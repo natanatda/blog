@@ -56,7 +56,7 @@
 								    <textarea class="form-control" rows="20" name="content" id="content" placeholder="write content!" >${article.content }</textarea>
 	                        </section>
 							<c:if test="${num==null }">
-								<input type="submit"  class="btn btn-primary" value="write" style="margin-top:30px; margin-bottom:150px;" onclick="showContent()" >
+								<input type="submit"  class="btn btn-primary" value="write" style="margin-top:30px; margin-bottom:150px;" onclick="return showContent();" >
 							</c:if>
 							<c:if test="${num!=null }">
 								<input type="button"  class="btn btn-primary" value="update" style="margin-top:30px; margin-bottom:150px;" onclick="updatePro()" >
@@ -126,8 +126,12 @@
 	    if (content.includes("\n")) {
 	        str = content.replace(/\n+/g, "\n");
 	        str = str.replace(/\n/g, "</p>\n<p class=\"fs-5 mb-4\">");
-	        str= "<section class=\"target\">\n<p class=\"fs-5 mb-4\">"+str+"</p>\n</section>";
+	        str = "<section class=\"target\">\n<p class=\"fs-5 mb-4\">"+str+"</p>\n</section>";
+	        str = str.replace('<p class="fs-5 mb-4">/', '<h2 class="fw-bolder mb-4 mt-5">');
+	        str = str.replace('</p>', '</h2>');
+	        alert(str);
 		    document.getElementById("content").value=str;
+		    return false;
 	    }
 	}
 	function updatePro() {
