@@ -17,15 +17,25 @@
   <!-- Responsive navbar-->
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
             <div class="container">
-                <a class="navbar-brand" href="#!">Start Bootstrap</a>
+                <a class="navbar-brand" href="/blog/member/main">whoU</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                        <li class="nav-item"><a class="nav-link active" href="#">Home</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#!">About</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#!">Contact</a></li>
-                        <li class="nav-item"><a class="nav-link" aria-current="page" href="#">Blog</a></li>
-                         <li class="nav-item"><a class="nav-link" href="/blog/img_board2/writeForm">Write</a></li>
+                        <li class="nav-item"><a class="nav-link active" aria-current="page" href="/blog/member/main">Home</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/blog/board/list">board</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/blog/imgBoard1/list">imgBoard</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/blog/img_board2/list">imgBoard2</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/blog/guest/guestbook">guestBook</a></li>
+                    </ul>
+                    <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                    	<c:if test="${sessionScope.memId != null}">
+	                        <li class="nav-item"><a class="nav-link" href="/blog/member/updateForm">myPage</a></li>
+	                        <li class="nav-item"><a class="nav-link" href="/blog/member/logout">logout</a></li>
+                    	</c:if>
+                    	<c:if test="${sessionScope.memId == null}">
+	                        <li class="nav-item"><a class="nav-link" href="/blog/member/inputForm">join</a></li>
+	                        <li class="nav-item"><a class="nav-link" href="/blog/member/login">login</a></li>
+                        </c:if>
                     </ul>
                 </div>
             </div>
@@ -91,6 +101,12 @@
                 </div>
                 <!-- Side widgets-->
                 <div class="col-lg-4">
+                	<!-- 글쓰기 버튼 -->
+                	<c:if test="${sessionScope.memId =='whou' }">
+			        	<div class="justify-content-start d-flex" style="margin-bottom:20px;">
+			        		<input type="button" class="btn btn-primary col-12 btn-lg" value="글쓰기" onclick="location='writeForm'">
+			        	</div>
+			       	</c:if>
                     <!-- Search widget-->
                     <div class="card mb-4">
                         <div class="card-header">Search</div>

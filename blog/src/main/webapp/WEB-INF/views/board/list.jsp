@@ -126,9 +126,10 @@
                 
                 <!-- Side widgets-->
                 <div class="col-lg-4">
+                	<!-- 글쓰기 버튼 -->
                 	<c:if test="${sessionScope.memId =='whou' }">
 			        	<div class="justify-content-start d-flex" style="margin-bottom:20px;">
-			        		<input type="button" class="btn btn-primary col-12 btn-lg" value="글쓰기" onclick="location='writeForm'">
+			        		<input type="button" class="btn btn-primary col-12 btn-lg" value="글쓰기" onclick="location='post'">
 			        	</div>
 			       	</c:if>
                     <!-- Search widget-->
