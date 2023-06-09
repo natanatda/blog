@@ -14,5 +14,4 @@ public class Img_Board2DTO {
 	private String ip;
 	private Date reg_date;
 	private String img;
-	private String test;
 }

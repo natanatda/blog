@@ -14,6 +14,26 @@
 	select count(*) from img_board2
 </select>
 
+<select id="getBoard" resultType="test.spring.component.Img_Board2DTO">
+	select * from img_board2 where img_board2_num=#{num}
+</select>
 
+<insert id="writeBoard">
+	insert into img_board2 values(img_board2_SEQ.NEXTVAL,#{id},#{subject},#{content},0,#{ip},sysdate,#{img})
+</insert>
+
+<delete id="deleteBoard">
+	delete from img_board2 where img_board2_num=#{num}
+</delete>
+
+<update id="updateBoard">
+	update img_board2
+		<set>
+			<if test="subject != null">subject=#{subject},</if>
+			<if test="content != null">content=#{content},</if>
+			
+		</set> 
+		where img_board2_num=#{img_board2_num}
+</update>
 
 </mapper>

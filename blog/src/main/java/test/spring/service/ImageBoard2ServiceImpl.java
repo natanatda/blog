@@ -17,11 +17,30 @@ public class ImageBoard2ServiceImpl implements ImageBoard2Service {
 	@Override
 	public List<Img_Board2DTO> getList(int start, int end) {
 		return mapper.getList(start, end);
+	} 
+
+	@Override
+	public void writeBoard(Img_Board2DTO dto) {
+		mapper.writeBoard(dto);
+		return;
+	}
+	
+	@Override
+	public Img_Board2DTO getBoard(int num) {
+		return mapper.getBoard(num);
 	}
 
 	@Override
 	public int countList() {
 		return mapper.countList();
+	}
+	@Override
+	public int deleteBoard(int num) {
+		return mapper.deleteBoard(num);
+	}
+	@Override
+	public int updateBoard(Img_Board2DTO dto) {
+		return mapper.updateBoard(dto);
 	}
 	
 }
