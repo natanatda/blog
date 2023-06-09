@@ -49,8 +49,8 @@
                     <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                         <li class="nav-item"><a class="nav-link active" aria-current="page" href="/blog/member/main">Home</a></li>
                         <li class="nav-item"><a class="nav-link" href="/blog/board/list">board</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#!">imgBoard</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#!">imgBoard2</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/blog/imgBoard1/list">imgBoard</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/blog/img_board2/list">imgBoard2</a></li>
                         <li class="nav-item"><a class="nav-link" href="/blog/guest/guestbook">guestBook</a></li>
                     </ul>
                     <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
@@ -77,9 +77,6 @@
         </header>
         <!-- Page content-->
         <div class="container">
-        <c:if test="${sessionScope.memId =='whou' }">
-        	<input type="button" class="btn btn-primary" value="글쓰기" onclick="location='writeForm'">
-       	</c:if>
             <div class="row">
                 <!-- Blog entries-->
                 <div class="col-lg-8">
@@ -123,8 +120,17 @@
 						</ul>
                     </nav>
                 </div>
+                
+                
+                
+                
                 <!-- Side widgets-->
                 <div class="col-lg-4">
+                	<c:if test="${sessionScope.memId =='whou' }">
+			        	<div class="justify-content-start d-flex" style="margin-bottom:20px;">
+			        		<input type="button" class="btn btn-primary col-12 btn-lg" value="글쓰기" onclick="location='writeForm'">
+			        	</div>
+			       	</c:if>
                     <!-- Search widget-->
                     <div class="card mb-4">
                         <div class="card-header">Search</div>

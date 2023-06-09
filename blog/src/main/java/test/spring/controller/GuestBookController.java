@@ -127,7 +127,6 @@ public class GuestBookController {
 		// 현재 시간 가져오기
         Date currentDate = new Date();
 
-        // 뉴욕 타임존으로 변경
         TimeZone ldTimeZone = TimeZone.getTimeZone("Europe/London");
 
         // Date 객체의 타임존 설정
