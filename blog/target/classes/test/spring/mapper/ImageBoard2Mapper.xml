@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-Mapper.dtd">
+<mapper namespace="test.spring.mapper.ImageBoard2Mapper">
+
+<select id="getList" resultType="test.spring.component.Img_Board2DTO">
+	 select * from 
+	   (select  img_board2_num , id , subject, reg_date, img, content, ip, readcount, ROW_NUMBER() OVER (ORDER BY reg_date desc) r from img_board2) 
+	   where r between #{start} and #{end}
+</select>
+
+<select id="countList" resultType="int">
+	select count(*) from img_board2
+</select>
+
+<select id="getBoard" resultType="test.spring.component.Img_Board2DTO">
+	select * from img_board2 where img_board2_num=#{num}
+</select>
+
+<insert id="writeBoard">
+	insert into img_board2 values(img_board2_SEQ.NEXTVAL,#{id},#{subject},#{content},0,#{ip},sysdate,#{img})
+</insert>
+
+<delete id="deleteBoard">
+	delete from img_board2 where img_board2_num=#{num}
+</delete>
+
+<update id="updateBoard">
+	update img_board2
+		<set>
+			<if test="subject != null">subject=#{subject},</if>
+			<if test="content != null">content=#{content},</if>
+			<if test="img != null">img=#{img}</if>
+			
+		</set> 
+		where img_board2_num=#{img_board2_num}
+</update>
+
+</mapper>
