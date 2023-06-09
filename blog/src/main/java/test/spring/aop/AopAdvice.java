@@ -24,10 +24,8 @@ public class AopAdvice {
 		HttpSession session = request.getSession();
 		
 		Object obj ="/member/main";
-		System.out.println("ㄴㄴㄴㄴ");
 		if(session.getAttribute("memId") != null) {
 			obj = jp.proceed();
-			System.out.println("ㅇㅇㅇㅇ");
 		}
 		return obj;
 	}

@@ -15,6 +15,7 @@
 		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
 		<!-- JavaScript Bundle with Popper -->
 		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+		<script src="//code.jquery.com/jquery-3.7.0.min.js"></script>
     </head>
     <body>
         <!-- Responsive navbar-->
@@ -46,9 +47,14 @@
         <!-- Header - set the background image for the header in the line below-->
         <header class="py-5 bg-image-full" style="background-image: url('https://source.unsplash.com/wfh8dDlNFOk/1600x900')">
             <div class="text-center my-5">
-                <img class="img-fluid rounded-circle mb-4" src="https://dummyimage.com/150x150/6c757d/dee2e6.jpg" alt="..." />
-                <h1 class="text-white fs-3 fw-bolder">Full Width Pics</h1>
-                <p class="text-white-50 mb-0">Landing Page Template</p>
+                <div class="d-flex justify-content-center">
+	                <h2 class="text-light mx-2">KOREA</h2> 
+	                <div id="time-K"></div>
+                </div>
+                <div class="d-flex justify-content-center align-items-center">
+                	<h2 class="text-light mx-2 mb-0">USA</h2> <div id="time-N"></div>
+                 </div>
+                <p class="text-white-50 mb-0">A single, lightweight helper class allows you to add engaging,<br> full width background images to sections of your page.</p>
             </div>
         </header>
         <!-- Content section-->
@@ -84,6 +90,30 @@
         <footer class="py-5 bg-dark">
             <div class="container"><p class="m-0 text-center text-white">Copyright &copy; Your Website 2023</p></div>
         </footer>
-
+ 		<script>
+           	$(function(){
+           		window.setInterval('timeN()', 1000);
+           		window.setInterval('timeK()', 1000);
+           	});
+           	
+           	function timeN(){
+           		$.ajax({           			
+           			url : "/blog/member/timeN",
+           			success : function(result){
+           				$("#time-N").html(result);
+           			}
+           		})
+           	}
+           	
+           	function timeK(){
+           		$.ajax({
+           			url : "/blog/member/timeK",
+           			success : function(result){
+           				$("#time-K").html(result);
+           			}
+           			
+           		})
+           	}
+         </script>
     </body>
 </html>

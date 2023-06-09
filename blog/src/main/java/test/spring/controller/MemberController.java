@@ -1,6 +1,10 @@
 package test.spring.controller;
 
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -161,6 +165,7 @@ public class MemberController {
         int endPage = startPage + pageBlock -1;
         if (endPage > pageCount) endPage = pageCount;
         
+        model.addAttribute("currentPage", currentPage);
         model.addAttribute("startPage", startPage);
         model.addAttribute("endPage", endPage);
         model.addAttribute("pageBlock", pageBlock);
@@ -175,10 +180,35 @@ public class MemberController {
 		String id = (String)session.getAttribute("memId");
 		dto.setId(id);
 		service.testBoardPro(dto);
-	
-		
-
 		return "redirect:/member/testBoard";
 	}
+	
+	@RequestMapping("timeK")
+	public String timeK(Model model) {
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		model.addAttribute("timeK", sdf.format(new Date()));
+		
+		return "/member/time";
+	}
+	
+	@RequestMapping("timeN")
+	public String timeN(Model model) {
+	
+		 // 현재 시간 가져오기
+        Date nowDate = new Date();
+
+        // 뉴욕 타임존으로 변경
+        TimeZone nyTimeZone = TimeZone.getTimeZone("America/New_York");
+
+        // Date 객체의 타임존 설정
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        sdf.setTimeZone(nyTimeZone);
+ 
+		model.addAttribute("timeN", sdf.format(nowDate));
+		
+		return "/member/time";
+	}
+	
 	
 }
