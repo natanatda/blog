@@ -51,7 +51,7 @@
         <!-- Page content-->
         <div class="container">
         <c:if test="${sessionScope.memId =='whou' }">
-        	<input type="button" value="글쓰기" onclick="location='writeForm'">
+        	<input type="button" class="btn btn-primary" value="글쓰기" onclick="location='writeForm'">
        	</c:if>
             <div class="row">
                 <!-- Blog entries-->

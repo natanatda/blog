@@ -84,10 +84,10 @@
 	                        </section>
 	                    </article>
                     	<c:if test="${sessionScope.memId == list.id}">
-		                    <input type="button" value="수정" onclick="location='/blog/board/modifyForm?board_num=${list.board_num}&id=${list.id }'">
-		                    <input type="button" id="delBt" value="삭제">
+		                    <input type="button" value="수정" class="btn btn-primary" onclick="location='/blog/board/modifyForm?board_num=${list.board_num}&id=${list.id }'">
+		                    <input type="button" id="delBt" class="btn btn-primary" value="삭제">
                     	</c:if>
-	                    <input type="button" value="목록으로" onclick="location='/blog/board/list'">
+	                    <input type="button" value="목록으로" class="btn btn-primary" onclick="location='/blog/board/list'">
                     </c:forEach>
 
                 </div>

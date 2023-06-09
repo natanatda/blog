@@ -76,8 +76,8 @@
 							 } catch(e) {}
 						}
 					</script>
-	                <input type="submit" id="save" value="저장"/>
-	                <input type="button" value="취소"/>
+	                <input type="submit" id="save" class="btn btn-primary" value="저장"/>
+	                <input type="button" class="btn btn-primary" value="취소"/>
 				</form>
 				</c:forEach>
                     
