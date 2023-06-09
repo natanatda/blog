@@ -56,7 +56,7 @@
 								    <textarea class="form-control" rows="20" name="content" id="content" placeholder="write content!" >${article.content }</textarea>
 	                        </section>
 							<c:if test="${num==null }">
-								<input type="submit"  class="btn btn-primary" value="write" style="margin-top:30px; margin-bottom:150px;" onclick="return showContent();" >
+								<input type="submit"  class="btn btn-primary" value="write" style="margin-top:30px; margin-bottom:150px;" onclick="showContent();" >
 							</c:if>
 							<c:if test="${num!=null }">
 								<input type="button"  class="btn btn-primary" value="update" style="margin-top:30px; margin-bottom:150px;" onclick="updatePro()" >
@@ -115,36 +115,31 @@
 <script>
 	var content = document.getElementById("content").value;
 	if (content.includes("\n")) {
-	    str = content.replace(/<\/p>\n<p class="fs-5 mb-4">/g, '\n');
-	    str = str.replace('<section class="target">\n<p class="fs-5 mb-4">', '');
-	    str = str.replace('</p>\n</section>', '');
-	    document.getElementById("content").value=str;
+		str = content.replace('<section class="target">\n<p class="fs-5 mb-4">', '')
+        .replace('</p>\n</section>', '')
+        .replace(/\n<p class="fs-5 mb-4">/g, '\n')
+        .replace(/\n<h2 class="fw-bolder mb-4 mt-5">/g, '\n/')
+        .replace(/<\/h2>/g, '/')
+        .replace(/<\/p>/g, '');
+		document.getElementById("content").value = str;
 	} 
 	var str="";
 	function showContent() {
 	    var content = document.getElementById("content").value;
 	    if (content.includes("\n")) {
-	        str = content.replace(/\n+/g, "\n");
-	        str = str.replace(/\n/g, "</p>\n<p class=\"fs-5 mb-4\">");
-	        str = "<section class=\"target\">\n<p class=\"fs-5 mb-4\">"+str+"</p>\n</section>";
-	        str = str.replace('<p class="fs-5 mb-4">/', '<h2 class="fw-bolder mb-4 mt-5">');
-	        str = str.replace('</p>', '</h2>');
-	        alert(str);
-		    document.getElementById("content").value=str;
-		    return false;
+	    	str = content.replace(/\n+/g, "\n")
+	            .replace(/\/+/g, '/')
+    	        .replace(/\n/g, "</p>\n<p class=\"fs-5 mb-4\">");
+			str = "<section class=\"target\">\n<p class=\"fs-5 mb-4\">" + str + "</p>\n</section>";
+			str = str.replace(/<p class="fs-5 mb-4">\/+/g, '<h2 class="fw-bolder mb-4 mt-5">')
+	        	.replace(/\/<\/p>/g, '</h2>');
+			document.getElementById("content").value = str;
 	    }
 	}
 	function updatePro() {
-	    var content = document.getElementById("content").value;
-	    if (content.includes("\n")) {
-	        str = content.replace(/\n+/g, "\n");
-	        str = str.replace(/\n/g, "</p>\n<p class=\"fs-5 mb-4\">");
-	        str= "<section class=\"target\">\n<p class=\"fs-5 mb-4\">"+str+"</p>\n</section>";
-		    document.getElementById("content").value=str;
-		    alert("${num}")
-			document.forms['form'].action = "/blog/imgBoard1/updatePro?num="+"${num}";
-		    document.forms['form'].submit();
-	    } 
+	    showContent();
+		document.forms['form'].action = "/blog/imgBoard1/updatePro?num="+"${num}";
+	    document.forms['form'].submit();
 	}
 	function openFileInput() {
 		document.getElementById('imageInput').click();

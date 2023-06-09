@@ -100,33 +100,27 @@ public class ImgBoard1Controller {
 		article.setReg_date(new Timestamp(System.currentTimeMillis()));
 		article.setIp(request.getRemoteAddr());
 		article.setReadcount(0);
-		service.insert(article);
 
 		String uploadPath = request.getRealPath("/resources/imgBoard1");
-		System.out.println(imgFile.getOriginalFilename());
-		System.out.println(imgFile.getSize());
 		int index = 0;
 		String orgName = imgFile.getOriginalFilename();
 		String name = orgName.substring(0, orgName.indexOf("."));
 		String ext = orgName.substring( orgName.lastIndexOf("."));
-		
+		String img ="";
 		File copy = new File(uploadPath+"//"+imgFile.getOriginalFilename());
 		String type = imgFile.getContentType();
 		try {
 			while(copy.isFile()) {
 				index++;
 				copy = new File(uploadPath+"//"+name+"("+index+")"+ext);
+				img = name+"("+index+")"+ext;
 			}
-			if(copy.exists()) {
-				if(type.split("/")[0].equals("image")){
-					imgFile.transferTo(copy);
-				}
-			}else {
-				if(type.split("/")[0].equals("image")){
-					imgFile.transferTo(copy);
-				}
+			if(type.split("/")[0].equals("image")){
+				imgFile.transferTo(copy);
 			}
 		}catch(Exception e) {e.printStackTrace();}
+		article.setImg(img);
+		service.insert(article);
 		return "redirect:/imgBoard1/list";
 	}
 	@RequestMapping("update")
