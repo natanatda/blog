@@ -61,16 +61,6 @@ public class ImageBoard2Controller {
 		return "img_board2/post";
 	}
 
-	@RequestMapping("write")
-	public String write(Model model, HttpServletRequest request) {
-		if (request.getParameter("img_board2_num") != null) {
-			int img_board2_num = Integer.parseInt(request.getParameter("img_board2_num"));
-			model.addAttribute("board", service.getBoard(img_board2_num));
-			model.addAttribute("num", img_board2_num);
-		}
-		return "img_board2/write";
-	}
-
 	@RequestMapping("writeForm")
 	public String writeForm(Model model, HttpServletRequest request) {
 		HttpSession session = request.getSession();
@@ -114,7 +104,7 @@ public class ImageBoard2Controller {
 				imgFile.transferTo(copy);
 				dto.setImg(fileName);
 			} else {
-				System.out.println("중복");
+				System.out.println("이미지만 업로드 가능합니다.");
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
