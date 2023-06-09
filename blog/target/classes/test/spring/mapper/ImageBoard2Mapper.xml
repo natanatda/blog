@@ -31,6 +31,7 @@
 		<set>
 			<if test="subject != null">subject=#{subject},</if>
 			<if test="content != null">content=#{content},</if>
+			<if test="img != null">img=#{img}</if>
 			
 		</set> 
 		where img_board2_num=#{img_board2_num}

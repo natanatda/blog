@@ -24,7 +24,7 @@
                         <li class="nav-item"><a class="nav-link" href="#!">About</a></li>
                         <li class="nav-item"><a class="nav-link" href="#!">Contact</a></li>
                         <li class="nav-item"><a class="nav-link active" aria-current="page" href="#">Blog</a></li>
-                        <li class="nav-item"><a class="nav-link" href="/blog/img_board2/write">Write</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/blog/img_board2/writeForm">Write</a></li>
                     </ul>
                 </div>
             </div>
@@ -49,13 +49,13 @@
                             </div>
                         </header>
                         <!-- Preview image figure-->
-                        <figure class="mb-4"><img class="img-fluid rounded" src="https://dummyimage.com/900x400/ced4da/6c757d.jpg" alt="..." /></figure>
+                        <figure class="mb-4"><img class="img-fluid rounded" src="../resources/imgBoard2/${board.img}" alt="img" /></figure>
                         <!-- Post content-->
                         <section class="mb-5">
                             <p class="fs-5 mb-4">${board.content}</p>
                         </section>
                         <button type="button" class="btn btn-dark" onclick="location='/blog/img_board2/deletePro?img_board2_num=${board.img_board2_num}'">Delete</button>
-                        <button type="button" class="btn btn-dark" onclick="location='/blog/img_board2/write?img_board2_num=${board.img_board2_num}'">Update</button>
+                        <button type="button" class="btn btn-dark" onclick="location='/blog/img_board2/writeForm?img_board2_num=${board.img_board2_num}'">Update</button>
                         
                     </article>
                 </div> 

@@ -25,7 +25,7 @@
                         <li class="nav-item"><a class="nav-link" href="#!">About</a></li>
                         <li class="nav-item"><a class="nav-link" href="#!">Contact</a></li>
                         <li class="nav-item"><a class="nav-link" aria-current="page" href="#">Blog</a></li>
-                         <li class="nav-item"><a class="nav-link" href="/blog/img_board2/write">Write</a></li>
+                         <li class="nav-item"><a class="nav-link" href="/blog/img_board2/writeForm">Write</a></li>
                     </ul>
                 </div>
             </div>
@@ -47,14 +47,14 @@
                     <!-- Featured blog post-->
                     
                     <!-- Nested row for non-featured blog posts-->
-                    
+                  
                     <div class="row">
                         <div class="col-lg-6">
                         <c:if test="${count > 0}">
                     	<c:forEach var="board" items="${list}">
                             <!-- Blog post-->
                             <div class="card mb-4">
-                                <a href="#!"><img class="card-img-top" src="https://dummyimage.com/700x350/dee2e6/6c757d.jpg" alt="..." /></a>
+                                <a href="#!"><img class="card-img-top" src="../resources/imgBoard2/${board.img}" alt="img" /></a>
                                 <div class="card-body">
                                     <div class="small text-muted"><fmt:formatDate value="${board.reg_date}" pattern="yyyy-MM-dd HH:mm" type="date"/></div>
                                     <h2 class="card-title h4">${board.subject}</h2>
