@@ -12,6 +12,7 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
 <!-- JavaScript Bundle with Popper -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+<script src="//code.jquery.com/jquery-3.7.0.min.js"></script>
 <script language="JavaScript">
 	function checkIt() {
 	    var guestForm = document.guestForm;
@@ -20,8 +21,35 @@
 	      return false;
 	    }
 	}
-	function updateBtn(){
-		
+	$(function(){
+		window.setInterval('timeK()', 1000);
+		window.setInterval('timeN()', 1000);
+		window.setInterval('timeL()', 1000);
+	});
+
+	function timeK(){
+		$.ajax({
+			url : "/blog/guest/timeK",
+			success : function(result){
+				$("#timeK").html(result);
+			}
+		});
+	}
+	function timeN(){
+		$.ajax({
+			url : "/blog/guest/timeN",
+			success : function(result){
+				$("#timeN").html(result);
+			}
+		});
+	}
+	function timeL(){
+		$.ajax({
+			url : "/blog/guest/timeL",
+			success : function(result){
+				$("#timeL").html(result);
+			}
+		});
 	}
 </script>
 </head>
@@ -52,15 +80,19 @@
                 </div>
             </div>
         </nav>
+        <!-- Page header with logo and tagline-->
+        <header class="py-5 bg-light border-bottom mb-4">
+            <div class="container">
+                <div class="text-center my-5">
+                    <h1 class="fw-bolder">Welcome! Everyone!</h1>
+                    <p class="lead mb-0">Please leave a guestbook message</p>
+                </div>
+            </div>
+        </header>
         <!-- Page content-->
         <div class="container mt-5">
             <div class="row">
                 <div class="col-lg-8">
-                    <!-- Post content-->
-                    <article>
-                        
-                        
-                    </article>
                     <!-- Comments section-->
                     <section class="mb-5">
                         <div class="card bg-light">
@@ -175,14 +207,23 @@
                     </div>
                     <!-- Side widget-->
                     <div class="card mb-4">
-                        <div class="card-header">Side Widget</div>
-                        <div class="card-body">You can put anything you want inside of these side widgets. They are easy to use, and feature the Bootstrap 5 card component!</div>
+                        <div class="card-header">Seoul Time</div>
+                        <div  id="timeK" class="card-body"></div>
+                    </div>
+                    <div class="card mb-4">
+                        <div class="card-header">NewYork Time</div>
+                        <div  id="timeN" class="card-body"></div>
+                    </div>
+                    <div class="card mb-4">
+                        <div class="card-header">London Time</div>
+                        <div  id="timeL" class="card-body"></div>
                     </div>
                 </div>
             </div>
         </div>
         <!-- Footer-->
         <footer class="py-5 bg-dark">
+        	
             <div class="container"><p class="m-0 text-center text-white">Copyright &copy; Your Website 2023</p></div>
         </footer>
 </body>

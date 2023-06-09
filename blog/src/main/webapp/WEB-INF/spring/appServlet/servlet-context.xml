@@ -35,7 +35,7 @@
 		<beans:property name="maxUploadSize" value="-1" />
 		
 		<beans:property name="maxUploadSizePerFile" value="2097152" />
-		<beans:property name="uploadTempDir" value="file:/d:/upload/tmp" />
+		<beans:property name="uploadTempDir" value="file:/c:/upload/tmp" />
 	</beans:bean>
 	
 	<context:component-scan base-package="test.spring.aop" />

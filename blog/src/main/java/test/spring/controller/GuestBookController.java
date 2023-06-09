@@ -1,6 +1,9 @@
 package test.spring.controller;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -60,6 +63,7 @@ public class GuestBookController {
         int endPage = startPage + pageBlock -1;
         if (endPage > pageCount) endPage = pageCount;
         
+        model.addAttribute("currentPage", currentPage);
         model.addAttribute("startPage", startPage);
         model.addAttribute("endPage", endPage);
         model.addAttribute("pageBlock", pageBlock);
@@ -91,5 +95,47 @@ public class GuestBookController {
 		service.delete(num);
 		
 		return "redirect:/guest/guestbook";
+	}
+	
+	@RequestMapping("timeK")
+	public String timeK(Model model) {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		model.addAttribute("timeK", sdf.format(new Date()));
+		
+		return "/blog/time";
+	}
+	
+	@RequestMapping("timeN")
+	public String timeN(Model model) {
+		// 현재 시간 가져오기
+        Date currentDate = new Date();
+
+        // 뉴욕 타임존으로 변경
+        TimeZone nyTimeZone = TimeZone.getTimeZone("America/New_York");
+
+        // Date 객체의 타임존 설정
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        sdf.setTimeZone(nyTimeZone);
+        String nyTime = sdf.format(currentDate);
+        
+        model.addAttribute("timeN", nyTime);
+		return "/blog/time";
+	}
+	
+	@RequestMapping("timeL")
+	public String timeT(Model model) {
+		// 현재 시간 가져오기
+        Date currentDate = new Date();
+
+        // 뉴욕 타임존으로 변경
+        TimeZone ldTimeZone = TimeZone.getTimeZone("Europe/London");
+
+        // Date 객체의 타임존 설정
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        sdf.setTimeZone(ldTimeZone);
+        String ldTime = sdf.format(currentDate);
+        
+        model.addAttribute("timeL", ldTime);
+		return "/blog/time";
 	}
 }

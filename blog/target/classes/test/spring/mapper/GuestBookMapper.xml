@@ -20,10 +20,10 @@
 	</select>
 	
 	<update id="update">
-		update guestbook set subject=#{subject} where num=#{num}
+		update guestbook set subject=#{subject}, reg_date=sysdate where num=#{num}
 	</update>
 	
 	<delete id="delete">
-		delete from guestbook where num=#{num}
+		delete from guestbook where num=#{num}      
 	</delete>
 </mapper>
