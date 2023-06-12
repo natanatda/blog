@@ -144,8 +144,10 @@
                         <div class="card-body">You can put anything you want inside of these side widgets. They are easy to use, and feature the Bootstrap 5 card component!</div>
                     </div>
                     <input type="button"  class="btn btn-primary" value="list" style="margin-top:50px; margin-bottom:80px;" onclick="location='list'" >
+                    <c:if test="${sessionScope.memId!=null }">
                     <input type="button"  class="btn btn-primary" value="update" style="margin-top:50px; margin-bottom:80px;" onclick="location='update?num=${article.img_board1_num}'" >
                     <input type="button"  class="btn btn-primary" value="delete" style="margin-top:50px; margin-bottom:80px;" onclick="location='delete?num=${article.img_board1_num}'" >
+                    </c:if>
                 </div>
             </div>
         </div>

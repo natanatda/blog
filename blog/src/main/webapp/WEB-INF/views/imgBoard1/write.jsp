@@ -66,13 +66,15 @@
 								    <textarea class="form-control" rows="1" name="subject" id="subject" placeholder="write subject!">${article.subject }</textarea>
 								    <textarea class="form-control" rows="20" name="content" id="content" placeholder="write content!" >${article.content }</textarea>
 	                        </section>
-							<c:if test="${num==null }">
-								<input type="submit"  class="btn btn-primary  col-12 btn-lg" value="write" style="margin-top:30px; margin-bottom:150px;" onclick="showContent();" >
-							</c:if>
-							<c:if test="${num!=null }">
-								<input type="button"  class="btn btn-primary" value="update" style="margin-top:30px; margin-bottom:150px;" onclick="updatePro()" >
-							</c:if>
-							<input type="button"  class="btn btn-primary" value="list" style="margin-top:30px; margin-bottom:150px;" onclick="location='list'" >
+	                        <c:if test="${sessionScope.memId!=null }">
+								<c:if test="${num==null }">
+									<input type="submit"  class="btn btn-primary  col-12 btn-lg" value="write" style="margin-top:30px; margin-bottom:150px;" onclick="showContent();" >
+								</c:if>
+								<c:if test="${num!=null }">
+									<input type="button"  class="btn btn-primary" value="update" style="margin-top:30px; margin-bottom:150px;" onclick="updatePro()" >
+								</c:if>
+	                        </c:if>
+								<input type="button"  class="btn btn-primary" value="list" style="margin-top:30px; margin-bottom:150px;" onclick="location='list'" >
 						</form>
                     </article>
                 </div>
